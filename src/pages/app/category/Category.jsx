@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CategoryChip from "../../../components/app/Category/CategoryChip";
-import CreateCategory from "../../../components/app/Category/CreateCategory";
+import CategoryChip from "../../../components/app/category/CategoryChip";
+import CreateCategory from "../../../components/app/category/CreateCategory";
 
 export default function Category() {
   const [isCategory, setIsCategory] = useState(false);

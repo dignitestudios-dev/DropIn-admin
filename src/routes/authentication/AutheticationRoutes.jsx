@@ -1,12 +1,12 @@
-import DummyLogin from "../../pages/authentication/DummyLogin";
 import ForgotPassword from "../../pages/authentication/ForgotPassword";
 import VerifyOtp from "../../pages/authentication/VerifyOtp";
 import ChangePassword from "../../pages/authentication/ChangePassword";
+import Login from "../../pages/authentication/Login";
 
 export const authRoutes = [
   {
     url: "login",
-    page: DummyLogin,
+    page: Login,
     name: "Login",
     isPublic: true,
   },

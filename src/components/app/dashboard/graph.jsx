@@ -8,10 +8,8 @@ import {
   Tooltip,
   Filler,
   Legend,
-  scales,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { MdKeyboardArrowDown } from "react-icons/md";
 
 ChartJS.register(
   CategoryScale,

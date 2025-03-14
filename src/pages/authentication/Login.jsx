@@ -9,7 +9,7 @@ import { FiLoader } from "react-icons/fi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Logo } from "../../assets/export";
 
-const DummyLogin = () => {
+const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate=useNavigate("")
   const { loading, postData } = useLogin();
@@ -151,4 +151,4 @@ const DummyLogin = () => {
   );
 };
 
-export default DummyLogin;
+export default Login;
