@@ -5,7 +5,7 @@ import {
   LogInBg,
 } from "../../../assets/export";
 import HorizontalBarChart from "../../../components/app/dashboard/BarChart";
-import { LineGraph } from "../../../components/app/dashboard/Graph";
+import { LineGraph } from "../../../components/app/dashboard/graph";
 import { useUsers } from "../../../hooks/api/Get";
 const Dashboard = () => {
   const { data, loading, pagination } = useUsers("/admin/users", 1);
