@@ -24,11 +24,19 @@ export default function Pagination() {
           <button
             key={page}
             onClick={() => handlePageChange(page)}
-            className={`w-full px-4 py-2 text-base ${
-              page === pageNo
-                ? "text-white bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] rounded-l-xl"
-                : "text-[#6D6D6D]"
-            }`}
+            className={`w-full px-4 py-2 text-base 
+              ${
+                pageNo == 1
+                  ? "rounded-l-xl"
+                  : pageNo == pages?.length
+                  ? "rounded-r-xl"
+                  : "rounded-xl"
+              }              
+              ${
+                page === pageNo
+                  ? "text-white bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91]"
+                  : "text-[#6D6D6D]"
+              }`}
           >
             {page}
           </button>
