@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ReportedUsers from "../../../components/app/Report/ReportedUsers";
-import ReportedEvents from "../../../components/app/Report/ReportedEvent";
+import ReportedUsers from "../../../components/app/report/ReportedUsers";
+import ReportedEvents from "../../../components/app/report/ReportedEvent";
 
 export default function Report() {
   const [activeTab, setActiveTab] = useState("users");

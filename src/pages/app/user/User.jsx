@@ -1,4 +1,4 @@
-import UserList from "../../../components/app/User/UserList";
+import UserList from "../../../components/app/user/UserList";
 
 export default function User() {
   return (

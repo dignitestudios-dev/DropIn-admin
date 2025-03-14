@@ -1,10 +1,10 @@
 import { MdBlock } from "react-icons/md";
 import { contact, LogInBg, mail, person, star } from "../../../assets/export";
 import { PiChatCircleText } from "react-icons/pi";
-import UserDetailReview from "../../../components/app/User/UserDetailReview";
+import UserDetailReview from "../../../components/app/user/UserDetailReview";
 import { useState } from "react";
-import UserDetailEvent from "../../../components/app/User/UserDetailEvent";
-import UserDetailConnection from "../../../components/app/User/UserDetailConnection";
+import UserDetailEvent from "../../../components/app/user/UserDetailEvent";
+import UserDetailConnection from "../../../components/app/user/UserDetailConnection";
 import { NavLink } from "react-router";
 export default function UserDetail() {
   const [ActiveTab, setActiveTab] = useState("All");

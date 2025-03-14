@@ -1,5 +1,5 @@
-import EventFilter from "../../../components/app/Event/EventFilter";
-import EventList from "../../../components/app/Event/EventList";
+import EventFilter from "../../../components/app/event/EventFilter";
+import EventList from "../../../components/app/event/EventList";
 
 export default function Event() {
   return (

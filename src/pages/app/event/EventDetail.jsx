@@ -1,15 +1,10 @@
 import {
   coverPhoto,
-  eventChatIcon,
-  EventList,
-  locationWithXbox,
-  person,
 } from "../../../assets/export";
-import { IoLocationSharp } from "react-icons/io5";
-import EventDetailHeader from "../../../components/app/Event/EventDetailHeader";
+import EventDetailHeader from "../../../components/app/event/EventDetailHeader";
 import { MdEventSeat } from "react-icons/md";
 import { FaClock } from "react-icons/fa";
-import EventPeopleGoing from "../../../components/app/Event/EventPeopleGoing";
+import EventPeopleGoing from "../../../components/app/event/EventPeopleGoing";
 export default function EventDetail() {
   return (
     <div>
