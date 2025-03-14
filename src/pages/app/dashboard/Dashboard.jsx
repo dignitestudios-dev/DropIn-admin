@@ -6,10 +6,10 @@ import {
 } from "../../../assets/export";
 import HorizontalBarChart from "../../../components/app/dashboard/BarChart";
 import { LineGraph } from "../../../components/app/dashboard/graph";
-import { useUsers } from "../../../hooks/api/Get";
+// import { useUsers } from "../../../hooks/api/Get";
 const Dashboard = () => {
-  const { data, loading, pagination } = useUsers("/admin/users", 1);
-  console.log(data, loading, pagination);
+  // const { data, loading, pagination } = useUsers("/admin/users", 1);
+  // console.log(data, loading, pagination);
   return (
     <div>
       <div className="relative w-[100%] flex justify-center">
