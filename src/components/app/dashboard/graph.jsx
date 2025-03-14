@@ -54,6 +54,7 @@ const generateRandomData = (min, max, length) => {
   );
 };
 
+
 const createGradient = (ctx, color1, color2) => {
   const gradient = ctx.createLinearGradient(0, 0, 0, 700);
   gradient.addColorStop(0, color1);
