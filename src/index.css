@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Webkit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px; /* Height for horizontal scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f100; /* Track background color */
+}
+
+body::-webkit-scrollbar-thumb {
+  display: none; 
+  background-color: #2f7ef7; /* Thumb color */
+  border-radius: 10px; /* Round edges for thumb */
+  border: 2px solid #f1f1f100; /* Border around thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #1373a3; /* Thumb color on hover */
+}
+
+
+/* Webkit-based browsers (Chrome, Safari, Edge) */
+.table-scroller::-webkit-scrollbar {
+  width: 4px;
+  height: 8px; /* Height for horizontal scrollbar */
+}
+
+.table-scroller::-webkit-scrollbar-track {
+  background: #f1f1f100; /* Track background color */
+}
+
+.table-scroller::-webkit-scrollbar-thumb {
+  /* display: none;  */
+  background-color: #2f7ef7; /* Thumb color */
+  border-radius: 10px; /* Round edges for thumb */
+  border: 2px solid #f1f1f100; /* Border around thumb */
+}
+
+.table-scroller::-webkit-scrollbar-thumb:hover {
+  background-color: #1373a3; /* Thumb color on hover */
+}
+
+.event-select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("./assets/down.png");
+  background-position:95% 60%;
+  background-size: 10%;
+  background-repeat: no-repeat;
+}
