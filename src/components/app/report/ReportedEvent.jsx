@@ -47,7 +47,7 @@ export default function ReportedEvents() {
               <div className="space-y-3 mb-4">
                 <div className="text-[12px]">
                   <p className="text-white/70 mb-1">Reason:</p>
-                  <p className="leading-relaxed">
+                  <p className="leading-relaxed text-wrap">
                     Lorem ipsum dolor sit amet consectetur. Donec mattis
                     vestibulum.
                   </p>

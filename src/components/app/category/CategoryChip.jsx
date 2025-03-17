@@ -10,7 +10,7 @@ import { IoMdClose } from "react-icons/io";
 export default function CategoryChip() {
   return (
     <div className="inline-flex flex-wrap gap-2 mt-10">
-      <div className="inline-flex flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
+      <div className="inline-flex w-full  sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
         <img
           className="me-1.5 inline-block size-6 rounded-full"
           src={confrence}
@@ -19,11 +19,11 @@ export default function CategoryChip() {
         <div className="whitespace-nowrap text-xs font-medium text-white">
           Conferences & Summits
         </div>
-        <div className="ms-2.5 inline-flex justify-center items-center size-5 rounded-full cursor-pointer">
+        <div className="ms-2.5 inline-flex w-full justify-end items-center size-5 rounded-full cursor-pointer">
           <IoMdClose className="text-white text-2xl" />
         </div>
       </div>
-      <div className="inline-flex flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
+      <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
         <img
           className="me-1.5 inline-block size-6 rounded-full"
           src={fasion}
@@ -32,11 +32,11 @@ export default function CategoryChip() {
         <div className="whitespace-nowrap text-xs font-medium text-white">
           Fashion Shows
         </div>
-        <div className="ms-2.5 inline-flex justify-center items-center size-5 rounded-full cursor-pointer ">
+        <div className="ms-2.5 inline-flex w-full justify-end items-center size-5 rounded-full cursor-pointer ">
           <IoMdClose className="text-white text-2xl" />
         </div>
       </div>
-      <div className="inline-flex flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
+      <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
         <img
           className="me-1.5 inline-block size-6 rounded-full"
           src={exhibition}
@@ -45,11 +45,11 @@ export default function CategoryChip() {
         <div className="whitespace-nowrap text-xs font-medium text-white">
           Art Exhibitions
         </div>
-        <div className="ms-2.5 inline-flex justify-center items-center size-5 rounded-full cursor-pointer">
+        <div className="ms-2.5 w-full inline-flex justify-end items-center size-5 rounded-full cursor-pointer">
           <IoMdClose className="text-white text-2xl" />
         </div>
       </div>
-      <div className="inline-flex flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
+      <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
         <img
           className="me-1.5 inline-block size-6 rounded-full"
           src={music}
@@ -58,11 +58,11 @@ export default function CategoryChip() {
         <div className="whitespace-nowrap text-xs font-medium text-white">
           Music Festivals
         </div>
-        <div className="ms-2.5 inline-flex justify-center items-center size-5 rounded-full cursor-pointer">
+        <div className="ms-2.5 inline-flex w-full justify-end items-center size-5 rounded-full cursor-pointer">
           <IoMdClose className="text-white text-2xl" />
         </div>
       </div>
-      <div className="inline-flex flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
+      <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
         <img
           className="me-1.5 inline-block size-6 rounded-full"
           src={concert}
@@ -71,7 +71,7 @@ export default function CategoryChip() {
         <div className="whitespace-nowrap text-xs font-medium text-white">
           Concerts
         </div>
-        <div className="ms-2.5 inline-flex justify-center items-center size-5 rounded-full cursor-pointer">
+        <div className="ms-2.5 inline-flex justify-end w-full items-center size-5 rounded-full cursor-pointer">
           <IoMdClose className="text-white text-2xl" />
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function UserDetail() {
           className="w-full rounded-[15px] mx-auto shadow-2xl object-cover h-[115px]   absolute"
         />
       </div>
-      <div className="bg-[#13131399] flex justify-between items-center m-5 mt-16  rounded-[15px] h-[80px] p-3 backdrop-blur-[50px]">
+      <div className="bg-[#13131399] flex justify-between flex-wrap items-center m-5 mt-16  rounded-[15px] sm:h-[80px] p-3 backdrop-blur-[50px]">
         <div className="flex relative items-end -mt-14 gap-3">
           <img
             src={person}

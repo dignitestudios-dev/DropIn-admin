@@ -13,20 +13,20 @@ const Navbar = () => {
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
-        <div>
+        <div className="hidden sm:flex" >
           <div className="relative">
             <div className="absolute inset-y-0 end-0 flex items-center px-3 pointer-events-none">
               <CiSearch color="white" />
             </div>
             <input
               type="text"
-              className="block w-[350px] h-[50px] px-3 text-sm text-white border border-[#F4F4F480] bg-transparent rounded-[14px] "
+              className="block w-auto sm:w-[350px] h-[50px] px-3 text-sm text-white border border-[#F4F4F480] bg-transparent rounded-[14px] "
               placeholder="Search"
               required=""
             />
           </div>
         </div>
-        <div className="flex items-center px-1 justify-start gap-4">
+        <div className="flex items-center px-1 justify-end w-full gap-4">
           <button onClick={() => setIsOpen(!isOpen)} className="">
             <img src={notificationDrodown} className="w-6" alt="" />
           </button>

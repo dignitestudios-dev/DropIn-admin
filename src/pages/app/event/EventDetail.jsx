@@ -17,8 +17,8 @@ export default function EventDetail() {
       </div>
       <EventDetailHeader />
 
-      <div className="grid grid-cols-1 lg:grid-cols-6 grid-rows-6 gap-4">
-        <div className="col-span-12  lg:h-auto lg:col-span-2 row-start-2 lg:row-span-1 flex items-center gap-3 bg-[#13131399] backdrop-blur-[50] p-5 rounded-[15px] shadow-lg">
+      <div className="grid grid-cols-1 lg:grid-cols-6 grid-rows-1 lg:grid-rows-6 gap-4">
+        <div className="col-span-12  lg:h-auto lg:col-span-2 row-start-2 h-[100px] sm:-[auto] lg:row-span-1 flex items-center gap-3 bg-[#13131399] backdrop-blur-[50] p-5 rounded-[15px] shadow-lg">
           <div className="w-[48px] h-[48px] rounded-[9px] overflow-hidden">
             <div className="bg-[#2F7EF7] text-center text-white  font-[400] text-[11px]">
               Feb

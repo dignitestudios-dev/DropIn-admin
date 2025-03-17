@@ -6,7 +6,7 @@ export default function EventList() {
   const navigate = useNavigate("");
   return (
     <div>
-      <div className="h-[67vh] table-scroller bg-[#13131399] mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 sm:px-5 mb-6">
+      <div className="h-[67vh] table-scroller bg-[#13131399] mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 py-2 sm:py-0 sm:px-5 mb-6">
         {/* Header Row - Hidden on Mobile */}
         <div className="hidden md:grid grid-cols-12 text-[14px] leading-[19px] text-white rounded-[15px] font-light mb-2">
           <div className="col-span-2 py-4 text-left font-semibold text-[11px]">
@@ -45,7 +45,7 @@ export default function EventList() {
                 />
                 <div>
                   <p className="font-medium text-[14px]">Event Name</p>
-                  <p className="text-[12px] text-white/70">
+                  <p className="text-[12px] text-white/70 text-wrap">
                     Hosted by: Rolando Schowalter
                   </p>
                 </div>

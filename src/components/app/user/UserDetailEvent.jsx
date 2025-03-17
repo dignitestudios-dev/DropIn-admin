@@ -25,12 +25,12 @@ export default function UserDetailEvent() {
           <p className="text-[11px] font-normal mt-2 text-white">
             Event Type
           </p>         
-          <ul className="flex items-center justify-between text-white mt-3  gap-10">
+          <ul className="flex items-center justify-between w-full text-white mt-3  sm:gap-10">
             <li className="flex items-center gap-2 w-full border-r-2 " >
                 <img src={calendar} alt="calendar" className="w-6" />
                 <p className="font-normal text-[11px]" >Feb 20</p>
             </li>
-            <li className="flex items-center gap-2 border-r-2 w-full" >
+            <li className="flex items-center sm:gap-2 border-r-2 w-full" >
                 <img src={time} alt="time" className="w-6" />
                 <p className="font-normal text-[11px]" >08:00pm</p>
             </li>
