@@ -10,7 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 export default function CategoryChip({ setIsEditCategory }) {
   return (
-    <div className="bg-[#13131399] h-[77vh] rounded-[15px] p-4 ">
+    <div className="bg-[#13131399] h-[77vh] rounded-[15px] p-4 mt-5 ">
       <div>
         <div className="flex justify-between items-center ">
           <div className="flex items-center gap-2">
