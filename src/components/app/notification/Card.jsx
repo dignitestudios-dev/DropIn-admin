@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Card() {
   return (
-    <div className="bg-[#13131399] backdrop-blur-[50px] rounded-[15px]  h-[180px] px-3 py-3">
+    <div className="bg-[#13131399] backdrop-blur-[50px] rounded-[15px]  md:h-[180px] px-3 py-3">
       <h3 className="font-normal text-white text-[18px]">Title Here</h3>
       <p className="font-normal text-white text-[14px]">
         Lorem ipsum dolor sit amet consectetur. Aliquet mus feugiat eget proin

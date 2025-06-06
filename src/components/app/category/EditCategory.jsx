@@ -5,7 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { categoryValues } from "../../../init/app/App";
 import { music, uploadIcon } from "../../../assets/export";
 import { useState } from "react";
-const CreateCategory = ({ isOpen, setIsOpen }) => {
+const EditCategory = ({ isOpen, setIsOpen }) => {
   const [imagePreview, setImagePreview] = useState(uploadIcon); // State for image preview
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
@@ -43,7 +43,7 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
     >
       <div className="bg-[#13131399] w-[490px] px-4 py-4 pb-6 backdrop-blur-[50px]  rounded-[16px] shadow-lg">
         <div className="flex justify-between  items-center">
-          <h3 className="font-[700] text-[24px]  text-white ">Add Category</h3>
+          <h3 className="font-[700] text-[24px]  text-white ">Edit Category</h3>
           <button onClick={() => setIsOpen(!isOpen)}>
             <IoMdClose className="text-white text-2xl" />
           </button>
@@ -137,7 +137,7 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
             type="submit"
             className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            Add
+            Save
           </button>
         </form>
         <div className="inline-flex mt-3 w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">          
@@ -153,4 +153,4 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export default CreateCategory;
+export default EditCategory;

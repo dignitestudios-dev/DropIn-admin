@@ -9,11 +9,11 @@ import { useNavigate } from "react-router";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
-  const navigate=useNavigate("");
+  const navigate = useNavigate("");
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
-        <div className="hidden sm:flex" >
+        <div className="hidden sm:flex">
           <div className="relative">
             <div className="absolute inset-y-0 end-0 flex items-center px-3 pointer-events-none">
               <CiSearch color="white" />
@@ -26,16 +26,35 @@ const Navbar = () => {
             />
           </div>
         </div>
-        <div className="flex items-center px-1 justify-end w-full gap-4">
-          <button onClick={() => setIsOpen(!isOpen)} className="">
-            <img src={notificationDrodown} className="w-6" alt="" />
-          </button>
-          <button className="focus:outline-none" onClick={()=>navigate("/chat")} >
-            <img src={chat} className="w-6" alt="" />
-          </button>
-          <div className="flex items-center gap-2 cursor-pointer" onClick={()=>setisProfileOpen(!isProfileOpen)} >
-            <img src={beardGuy} className="rounded-full w-8 h-8 lg:h-12 lg:w-12" alt="" />
-            <div className="lg:block hidden" >
+        <div className="flex relative items-center px-1 justify-end w-full gap-4">
+          {/* <div>
+            <button onClick={() => setIsOpen(!isOpen)} className="">
+              <img src={notificationDrodown} className="w-6" alt="" />
+            </button>
+            {isOpen && (
+              <div className="absolute left-0 lg:left-44 shadow-lg overflow-auto   p-3 top-20 bg-[#0E0E0E] h-[300px] w-[400px] rounded-[15px] ">
+                <NotificationDropdown />
+              </div>
+            )}
+          </div> */}
+          {/* <div>
+            <button
+              className="focus:outline-none"
+              onClick={() => navigate("/chat")}
+            >
+              <img src={chat} className="w-6" alt="" />
+            </button>
+          </div> */}
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => setisProfileOpen(!isProfileOpen)}
+          >
+            <img
+              src={beardGuy}
+              className="rounded-full w-8 h-8 lg:h-12 lg:w-12"
+              alt=""
+            />
+            <div className="lg:block hidden">
               <h4 className="font-[400] text-[12px] lg:text-[16px] text-white">
                 Austin Robertson
               </h4>
@@ -49,11 +68,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {isOpen && (
-        <div className="fixed right-60 shadow-lg overflow-auto   p-3 top-20 bg-[#0E0E0E] h-[300px] w-[400px] rounded-[15px] ">
-          <NotificationDropdown />
-        </div>
-      )}
+
       {isProfileOpen && (
         <div className="fixed right-10 shadow-lg overflow-auto   p-5 top-30 bg-[#0E0E0E]  w-[200px] rounded-[15px] ">
           <ProfileDropdown />

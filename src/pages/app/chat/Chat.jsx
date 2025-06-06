@@ -3,17 +3,22 @@ import { person } from "../../../assets/export";
 import ChatUser from "../../../components/app/chat/ChatUser";
 import ChatMessage from "../../../components/app/chat/ChatMessage";
 import { IoSend } from "react-icons/io5";
-
+// import { RiArrowGoBackFill } from "react-icons/ri";
 const Chat = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeChat, setActiveChat] = useState(null);
 
+
   return (
     <div className="h-[calc(100%-4.5rem)]">
-      <h3 className="font-[500] text-[28px] text-white">Chat</h3>
+      <div className="flex items-center gap-4">
+        {/* <RiArrowGoBackFill className="cursor-pointer" onClick={()=>setActiveChat(null)} color="white" size={25} /> */}
+        <h3 className="font-[500] text-[28px] text-white">Chat</h3>
+      </div>
       <div className="grid grid-cols-12 h-full gap-5 mt-3">
         {/* Left Sidebar */}
-        <div className="col-span-4">
+
+        <div className={`col-span-12 md:col-span-4 `}>
           <ChatUser
             activeChat={activeChat}
             setActiveChat={setActiveChat}
@@ -23,7 +28,9 @@ const Chat = () => {
         </div>
 
         {/* Right Chat Area */}
-        <div className="flex-1 bg-[#13131399] backdrop-blur-[50px] rounded-[15px] col-span-8 flex flex-col shadow-lg overflow-hidden">
+        <div
+          className={` bg-[#13131399] backdrop-blur-[50px] rounded-[15px] col-span-12 md:col-span-8 md:flex  flex-1  flex-col shadow-lg overflow-hidden`}
+        >
           {activeChat ? (
             <>
               {/* Chat Header */}
