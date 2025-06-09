@@ -34,11 +34,6 @@ export default function CategoryChip({ setIsEditCategory }) {
         </div>
         <div className="inline-flex flex-wrap gap-2 mt-5 bg-[#2626264D] w-full rounded-[15px] p-3">
           <div className="inline-flex w-full  sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={confrence}
-              alt="confrence"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Conferences & Summits
             </div>
@@ -47,11 +42,6 @@ export default function CategoryChip({ setIsEditCategory }) {
             </div>
           </div>
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={fasion}
-              alt="fasion"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Fashion Shows
             </div>
@@ -60,11 +50,6 @@ export default function CategoryChip({ setIsEditCategory }) {
             </div>
           </div>
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={exhibition}
-              alt="exhibition"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Art Exhibitions
             </div>
@@ -97,11 +82,6 @@ export default function CategoryChip({ setIsEditCategory }) {
         </div>
         <div className="inline-flex flex-wrap gap-2 mt-5 bg-[#2626264D] w-full rounded-[15px] p-3">
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={music}
-              alt="exhibition"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Music Festivals
             </div>
@@ -110,11 +90,6 @@ export default function CategoryChip({ setIsEditCategory }) {
             </div>
           </div>
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={concert}
-              alt="exhibition"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Concerts
             </div>
@@ -147,11 +122,6 @@ export default function CategoryChip({ setIsEditCategory }) {
         </div>
         <div className="inline-flex flex-wrap gap-2 mt-5 bg-[#2626264D] w-full rounded-[15px] p-3">
           <div className="inline-flex w-full  sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={confrence}
-              alt="confrence"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Conferences & Summits
             </div>
@@ -160,11 +130,6 @@ export default function CategoryChip({ setIsEditCategory }) {
             </div>
           </div>
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={fasion}
-              alt="fasion"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Fashion Shows
             </div>
@@ -173,11 +138,6 @@ export default function CategoryChip({ setIsEditCategory }) {
             </div>
           </div>
           <div className="inline-flex w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">
-            <img
-              className="me-1.5 inline-block size-6 rounded-full"
-              src={exhibition}
-              alt="exhibition"
-            />
             <div className="whitespace-nowrap text-xs font-medium text-white">
               Art Exhibitions
             </div>

@@ -7,7 +7,7 @@ export default function PushNotification() {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h3 className="font-[500] text-[20px] sm:text-[28px] text-white">Notification</h3>
+        <h3 className="font-[500] text-[20px] sm:text-[28px] text-white">Push Notification</h3>
         <button
           onClick={() => setIsNotification(!isNotification)}
           className="w-[80px] sm:w-[180px] h-[40px] sm:h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
@@ -15,7 +15,7 @@ export default function PushNotification() {
           Create
         </button>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5  mt-3">
+      <div className=" gap-5  mt-3">
         {[1, 2, 4, 5, 6, 7, 8, 9, 10].map((item) => (
           <Card key={item} />
         ))}
