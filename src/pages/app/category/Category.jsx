@@ -2,10 +2,17 @@ import { useState } from "react";
 import CategoryChip from "../../../components/app/category/CategoryChip";
 import CreateCategory from "../../../components/app/category/CreateCategory";
 import EditCategory from "../../../components/app/category/EditCategory";
+import DeleteModal from "../../../components/app/category/DeleteModal";
+import MoveSubCategory from "../../../components/app/category/MoveSubCategory";
+import SuccessCategory from "../../../components/app/category/SuccessCategory";
 
 export default function Category() {
   const [isCategory, setIsCategory] = useState(false);
   const [isEditCategory, setIsEditCategory] = useState(false);
+  const [isDelCategory, setIsDelCategory] = useState(false);
+  const [moveSubCateg, setMoveSubCateg] = useState(false);
+  const [SuccessCateg, setSuccessCateg] = useState(false);
+  console.log(moveSubCateg,"update")
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -19,9 +26,15 @@ export default function Category() {
           Add Category{" "}
         </button>
       </div>
-      <CategoryChip setIsEditCategory={setIsEditCategory} />
+      <CategoryChip
+        setIsEditCategory={setIsEditCategory}
+        isDelCategory={setIsDelCategory}
+      />
       <CreateCategory setIsOpen={setIsCategory} isOpen={isCategory} />
       <EditCategory setIsOpen={setIsEditCategory} isOpen={isEditCategory} />
+      <DeleteModal setIsOpen={setIsDelCategory} isOpen={isDelCategory} setMoveSubCateg={setMoveSubCateg} moveSubCateg={moveSubCateg} />
+      <MoveSubCategory setIsOpen={setMoveSubCateg} isOpen={moveSubCateg} isSuccess={SuccessCateg} setSuccess={setSuccessCateg} />
+      <SuccessCategory setIsOpen={setSuccessCateg} isOpen={SuccessCateg} />
     </div>
   );
 }

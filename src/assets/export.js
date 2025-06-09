@@ -48,13 +48,23 @@ import coverPhoto from "./coverPhoto.png";
 import eventChatIcon from "./eventChat.png";
 import locationWithXbox from "./locationWithXbox.png";
 import person2 from "./person2.png";
+import deleteIcon from "./delete.png";
+import MoveIcon from "./move.png";
+import runIcon from "./run.png";
+import otherIcon from "./other.png";
+import successCateg from "./success-categ.png";
 
 // export {
 //     FILENAME(PASCALCASE)
 // }
 
 export {
+  successCateg,
+  otherIcon,
+  runIcon,
+  MoveIcon,
   person2,
+  deleteIcon,
   locationWithXbox,
   eventChatIcon,
   coverPhoto,

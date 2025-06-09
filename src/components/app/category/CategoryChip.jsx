@@ -8,7 +8,7 @@ import {
 import { IoMdClose } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
-export default function CategoryChip({ setIsEditCategory }) {
+export default function CategoryChip({ setIsEditCategory,isDelCategory }) {
   return (
     <div className="bg-[#13131399] h-[77vh] rounded-[15px] p-4 mt-5 ">
       <div>
@@ -27,7 +27,7 @@ export default function CategoryChip({ setIsEditCategory }) {
             <button onClick={() => setIsEditCategory(true)}>
               <CiEdit color="#2F7EF7" size={25} />
             </button>
-            <button>
+            <button onClick={()=>isDelCategory(true)} >
               <FaRegTrashAlt color="red" size={25} />
             </button>
           </div>
@@ -75,7 +75,7 @@ export default function CategoryChip({ setIsEditCategory }) {
             <button onClick={() => setIsEditCategory(true)}>
               <CiEdit color="#2F7EF7" size={25} />
             </button>
-            <button>
+            <button onClick={()=>isDelCategory(true)} >
               <FaRegTrashAlt color="red" size={25} />
             </button>
           </div>
@@ -115,7 +115,7 @@ export default function CategoryChip({ setIsEditCategory }) {
             <button onClick={() => setIsEditCategory(true)}>
               <CiEdit color="#2F7EF7" size={25} />
             </button>
-            <button>
+            <button onClick={()=>isDelCategory(true)} >
               <FaRegTrashAlt color="red" size={25} />
             </button>
           </div>

@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
-        <div className="hidden sm:flex">
+        {/* <div className="hidden sm:flex">
           <div className="relative">
             <div className="absolute inset-y-0 end-0 flex items-center px-3 pointer-events-none">
               <CiSearch color="white" />
@@ -25,7 +25,7 @@ const Navbar = () => {
               required=""
             />
           </div>
-        </div>
+        </div> */}
         <div className="flex relative items-center px-1 justify-end w-full gap-4">
           {/* <div>
             <button onClick={() => setIsOpen(!isOpen)} className="">
