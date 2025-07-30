@@ -22,9 +22,9 @@ const appRoutes = [
       name: "Users"
     },
     {
-      url: "user/:id",
+      url: "users/:id",
       page: UserDetail,
-      name: "User Detail"
+      name: "Users Detail"
     },
     {
       url: "updatePassword",
@@ -47,9 +47,9 @@ const appRoutes = [
       name: "Events"
     },
     {
-      url: "event/:id",
+      url: "events/:id",
       page: EventDetail,
-      name: "Event Detail"
+      name: "Events Detail"
     },
     {
       url: "report",

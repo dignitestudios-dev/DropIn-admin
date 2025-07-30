@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FaAngleRight, FaChevronLeft } from "react-icons/fa6";
-export default function Pagination() {
-  const [pageNo, setPageNo] = useState(1);
-  const totalPages = 5;
+export default function Pagination({pagnition,setPageNo}) {
+  const currentPage = pagnition?.currentPage;
+  const totalPages = pagnition?.totalPages;
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const handlePageChange = (page) => {
@@ -26,14 +26,14 @@ export default function Pagination() {
             onClick={() => handlePageChange(page)}
             className={`w-full px-4 py-2 text-base 
               ${
-                pageNo == 1
+                currentPage == 1
                   ? "rounded-l-xl"
-                  : pageNo == pages?.length
+                  : currentPage == pages?.length
                   ? "rounded-r-xl"
                   : "rounded-xl"
               }              
               ${
-                page === pageNo
+                page === currentPage
                   ? "text-white bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91]"
                   : "text-[#6D6D6D]"
               }`}

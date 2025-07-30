@@ -1,15 +1,17 @@
-import { CiSearch } from "react-icons/ci";
 import { beardGuy, chat, notificationDrodown } from "../../assets/export";
 import { IoMdArrowDropdown } from "react-icons/io";
 import NotificationDropdown from "../global/NotificationDropdown";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfileDropdown from "../global/ProfileDropdown";
 import { useNavigate } from "react-router";
+import { AppContext } from "../../context/AppContext";
 
 const Navbar = () => {
+  const {user} = useContext(AppContext)
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const navigate = useNavigate("");
+  console.log(user,"user")
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
@@ -56,10 +58,10 @@ const Navbar = () => {
             />
             <div className="lg:block hidden">
               <h4 className="font-[400] text-[12px] lg:text-[16px] text-white">
-                Austin Robertson
+                {user?.name}
               </h4>
               <span className="font-[400] text-[10px] lg:text-[13px] text-white">
-                Administrator
+                {user?.email}
               </span>
             </div>
             <div>

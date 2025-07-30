@@ -6,10 +6,44 @@ import {
 } from "../../../assets/export";
 import HorizontalBarChart from "../../../components/app/dashboard/BarChart";
 import { LineGraph } from "../../../components/app/dashboard/graph";
-// import { useUsers } from "../../../hooks/api/Get";
+import { useState } from "react";
+import axios from "../../../axios";
+import { useEffect } from "react";
 const Dashboard = () => {
-  // const { data, loading, pagination } = useUsers("/admin/users", 1);
-  // console.log(data, loading, pagination);
+  const[state,setState]=useState({})
+  const[lineGraphData,setLineGraphData]=useState({})
+  const[year,setYear]=useState(2024)
+  const[eventGraphData,setEventGraphData]=useState('')
+  const getUsers=async()=>{
+    try {
+      const response=await axios.get("/dashboard/get-stats")
+      setState(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getLineGraph=async()=>{
+    try {
+      const response=await axios.get(`/dashboard/get-user-data?year=${year}`)
+      setLineGraphData(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const eventGraph=async()=>{
+    try {
+      const response=await axios.get(`/dashboard/get-event-data`)
+      setEventGraphData(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    getUsers()
+    getLineGraph()
+    eventGraph()
+  },[])
+  console.log(lineGraphData ,"lineGraphData")
   return (
     <div>
       <div className="relative w-[100%] flex justify-center">
@@ -26,7 +60,7 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 mt-10">
           <div className="backdrop-blur-[50px] bg-[#13131399]  flex p-5 rounded-[15px] items-center justify-between">
             <div>
-              <p className="font-500 text-[22px] text-[#C03221]">3648</p>
+              <p className="font-500 text-[22px] text-[#C03221]">{state.userCount}</p>
               <p className="font-500 text-[11px] text-[#8A92A6]">Users</p>
             </div>
             <div>
@@ -35,7 +69,7 @@ const Dashboard = () => {
           </div>
           <div className="bg-[#13131399] backdrop-blur-[50px] rounded-[15px] p-5 flex items-center justify-between">
             <div>
-              <p className="font-500 text-[22px] text-[#068B92]">2648</p>
+              <p className="font-500 text-[22px] text-[#068B92]">{state.eventCount}</p>
               <p className="font-500 text-[11px] text-[#8A92A6]">
                 Events Created
               </p>
@@ -46,7 +80,7 @@ const Dashboard = () => {
           </div>
           <div className="bg-[#13131399] backdrop-blur-[50px] rounded-[15px] p-5 flex items-center justify-between">
             <div>
-              <p className="font-500 text-[22px] text-[#17904B]">648</p>
+              <p className="font-500 text-[22px] text-[#17904B]">{state.featuredEventCount}</p>
               <p className="font-500 text-[11px] text-[#8A92A6]">
                 Featured Events
               </p>
@@ -57,8 +91,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <LineGraph />
-      <HorizontalBarChart />
+      <LineGraph dGraphData={lineGraphData} year={year} setYear={setYear}/>
+      <HorizontalBarChart eGraphData={eventGraphData}/>
     </div>
   );
 };

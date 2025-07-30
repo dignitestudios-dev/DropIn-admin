@@ -3,7 +3,12 @@ import Modal from "react-modal";
 import { notificationValues } from "../../../init/app/App";
 import { notificationSchema } from "../../../schema/app/AppSchema";
 import { IoMdClose } from "react-icons/io";
-const CreateNotification = ({ isOpen, setIsOpen }) => {
+import { SuccessToast } from "../../global/Toaster";
+import { useState } from "react";
+import axios from "../../../axios";
+const CreateNotification = ({ isOpen, setIsOpen,getNotificationList }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: notificationValues,
@@ -11,7 +16,24 @@ const CreateNotification = ({ isOpen, setIsOpen }) => {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: async (values, action) => {
-        const data = {};
+        setIsLoading(true);
+        setError('');
+        
+        const data = { title: values.title, description: values.detail };
+        try {
+          const response = await axios.post(`/notification/create-notification`, data);
+          if (response.status === 200) {
+            action.resetForm(); // Reset the form
+            setIsOpen(false);
+           SuccessToast('Notification created successfully');
+           getNotificationList()
+          }
+        } catch (error) {
+          console.error("Error creating notification:", error);
+          setError('Failed to create notification. Please try again.');
+        } finally {
+          setIsLoading(false);
+        }
       },
     });
   return (
@@ -92,10 +114,16 @@ const CreateNotification = ({ isOpen, setIsOpen }) => {
             ) : null}
           </div>
           <button
+          onClick={handleSubmit}
+          disabled={isLoading || !values.title || !values.detail}
             type="submit"
             className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            Save
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            ) : (
+              "Save"
+            )}
           </button>
         </form>
       </div>

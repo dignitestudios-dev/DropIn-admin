@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Logo } from "../../assets/export";
 import { useFormik } from "formik";
@@ -6,11 +6,16 @@ import { ChangedValues } from "../../init/authentication/authentication";
 import { ChangedSchema } from "../../schema/authentication/authenticationSchema";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router";
-
+import axios from "../../axios";
+import { AppContext } from "../../context/AppContext";
+import UpdatePasswordSuccessfully from "../../components/authentication/UpdatePasswordSuccessFully";
+import { FiLoader } from "react-icons/fi";
 export default function ChangePassword() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const navigate=useNavigate("");
+  const [loading,setloading]=useState(false)
+  const { updatePasswordSuccessfully, setUpdatePasswordSuccessfully } = useContext(AppContext);
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: ChangedValues,
@@ -18,9 +23,33 @@ export default function ChangePassword() {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: async (values, action) => {
-        navigate("/auth/login")
-        const data = {};
-      },
+        try {
+          setloading(true)
+          
+      
+          const data = {
+            newPassword: values.password,
+          };
+      
+          const response = await axios.post("auth/reset-password", data);
+      
+          if (response.status === 200) {
+            setUpdatePasswordSuccessfully(true); 
+      
+            // ✅ Navigate after 3 seconds
+            setTimeout(() => {
+              setUpdatePasswordSuccessfully(false);
+              navigate("/auth/login");
+            }, 5000);
+          } else {
+            console.error("Password change failed:", response.message);
+          }
+        } catch (error) {
+          console.error("Password change failed:", error);
+        } finally {
+          setloading(false)
+        } 
+      }
     });
   return (
     <div className="mt-10">
@@ -123,10 +152,11 @@ export default function ChangePassword() {
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            <span>Change Password</span>
+            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Change Password</span>}
           </button>
         </form>
       </div>
+      <UpdatePasswordSuccessfully/>
     </div>
   );
 }

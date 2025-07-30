@@ -1,9 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReportedUsers from "../../../components/app/report/ReportedUsers";
 import ReportedEvents from "../../../components/app/report/ReportedEvent";
-
+import axios from "../../../axios";
 export default function Report() {
+  const [loading,setLoading]=useState(false)
+const [reportList,setReportList]=useState([])
   const [activeTab, setActiveTab] = useState("users");
+  const getReportedUsers=async()=>{
+    try {
+      setLoading(true)
+      const response=await axios.get("/report/get-reports?type=group&page=1&limit=10")
+      setReportList(response?.data?.data?.reports)
+      console.log(response,"response")
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
+  useEffect(()=>{
+    getReportedUsers()
+  },[])
+  console.log("reportList",reportList)
   return (
     <div>
       <div className="flex items-center gap-10">
@@ -27,7 +45,7 @@ export default function Report() {
           </button>
         </div>
       </div>
-      {activeTab == "users" ? <ReportedUsers /> : <ReportedEvents/>}
+      {activeTab == "users" ? <ReportedUsers reportList={reportList} /> : <ReportedEvents reportList={reportList}/>}
     </div>
   );
 }

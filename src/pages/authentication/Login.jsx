@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLogin } from "../../hooks/api/Post";
 import { processLogin } from "../../lib/utils";
 import { useFormik } from "formik";
@@ -8,12 +8,15 @@ import { NavLink, useNavigate } from "react-router";
 import { FiLoader } from "react-icons/fi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Logo } from "../../assets/export";
-
+import axios from "../../axios";
+import { AppContext } from "../../context/AppContext";
+import { ErrorToast } from "../../components/global/Toaster";
 const Login = () => {
+  const {handleLogin} = useContext(AppContext)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate=useNavigate("")
-  const { loading, postData } = useLogin();
-
+  // const { loading, postData } = useLogin();
+const [loading,setloading]=useState(false)
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: loginValues,
@@ -21,11 +24,26 @@ const Login = () => {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: async (values, action) => {
-        const data = {
-          email: values?.email,
-          password: values?.password,
-        };
-        navigate("/dashboard")
+        try {
+          const response = await axios.post("auth/login", {
+            email: values.email,
+            password: values.password,
+          });
+          
+          if (response?.status === 200) {
+            handleLogin(response?.data?.data)
+            
+            navigate("/dashboard");
+           
+          }
+        } catch (err) {
+          ErrorToast(
+            err.response?.data?.message || "Login failed. Please try again."
+          );
+        } finally {
+          setloading(false);
+        }
+        // navigate("/dashboard")
         // postData("/admin/login", false, null, data, processLogin);
 
         // Use the loading state to show loading spinner

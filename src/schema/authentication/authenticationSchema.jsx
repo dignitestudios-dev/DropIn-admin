@@ -6,7 +6,7 @@ export const signInSchema = Yup.object({
     .required("Please enter your email"),
   password: Yup.string()
     .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+    .min(8, "Password must contain atleast 8 alphanumeric characters.")
     .required("Please enter your password"),
 });
 
@@ -19,25 +19,24 @@ export const ForgotSchema = Yup.object({
 export const ChangedSchema = Yup.object({
   password: Yup.string()
     .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+    .min(8, "Password must contain atleast 8 alphanumeric characters.")
     .required("Please enter your password"),
   confirmpassword: Yup.string()
-    .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+  .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Please enter your password"),
 });
 
 export const UpdateSchema = Yup.object({
   oldPassword: Yup.string()
     .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+    .min(8, "Password must contain atleast 8 alphanumeric characters.")
     .required("Please enter your password"),
   newPassword: Yup.string()
     .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+    .min(8, "Password must contain atleast 8 alphanumeric characters.")
     .required("Please enter your password"),
   reEnterPassword: Yup.string()
     .matches(/^(?!\s)(?!.*\s$)/, "Password must not begin or end with spaces")
-    .min(6, "Password must contain atleast 6 alphanumeric characters.")
+    .min(8, "Password must contain atleast 8 alphanumeric characters.")
     .required("Please enter your password"),
 });

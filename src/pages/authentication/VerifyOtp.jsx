@@ -3,17 +3,61 @@ import { NavLink, useNavigate } from "react-router";
 import { Logo } from "../../assets/export";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import CountDown from "../../components/authentication/CountDown";
-
+import axios from "../../axios";
+import { ErrorToast } from "../../components/global/Toaster";
+import { SuccessToast } from "../../components/global/Toaster";
+import Cookies from "js-cookie";
+import { FiLoader } from "react-icons/fi";
 export default function VerifyOtp() {
-  const [otp, setOtp] = useState(Array(6).fill(""));
+  const [otp, setOtp] = useState(Array(5).fill(""));
   const inputs = useRef([]);
   const [isActive, setIsActive] = useState(true);
   const [seconds, setSeconds] = useState(30);
-  const navigate=useNavigate("");
-  const handleRestart = () => {
-    setSeconds(30);
-    setIsActive(true);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const email=sessionStorage.getItem("email");
+
+  // const handleRestart = () => {
+  //   setSeconds(30);
+  //   setIsActive(true);
+  // };
+
+
+  const verifyOtp = async () => {
+    if (loading) return;
+
+    const otpString = otp.join('');
+    if (otpString.length !== 5) {
+      ErrorToast('Please enter a 5-digit OTP');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post('/auth/verify-reset-otp',{
+        email: email,
+        otp: otpString,
+      });
+
+      if (response.data.success) {
+        console.log(response?.data.data.token);
+        Cookies.set("token", response?.data?.data?.token);
+        SuccessToast('OTP verified successfully');
+        navigate('/auth/changePassword');
+      } else {
+        ErrorToast('Invalid OTP. Please try again');
+      }
+    } catch (error) {
+      ErrorToast(error.response?.data?.message || 'Failed to verify OTP');
+    } finally {
+      setLoading(false);
+    }
+    setOtp(Array(5).fill(''));
   };
+
+
+
+
   const handleChange = (e, index) => {
     const { value } = e.target;
 
@@ -46,7 +90,33 @@ export default function VerifyOtp() {
     }
     e.preventDefault();
   };
-  
+  const handleRestart = async () => {
+    try {
+      // Send email for password reset
+      const response = await axios.post(
+        "/auth/verify-reset-otp",
+       
+        {
+          email:email,
+        }
+      );
+     
+      if (response?.status === 200) {
+        
+        
+        SuccessToast(response?.data?.message);
+        setSeconds(30);
+        setIsActive(true);
+       setOtp(Array(5).fill(''));
+      }
+      // Navigate to OTP verificatio
+    } catch (error) {
+      ErrorToast(
+        error.response?.data?.message || "Failed to send reset email"
+      );
+    }
+   
+  };
   return (
     <div className="mt-10">
       <img
@@ -70,9 +140,10 @@ export default function VerifyOtp() {
 
         <form onSubmit={(e)=>{
           e.preventDefault();
-          navigate("/auth/changePassword")
-        }} className="w-full md:w-[393px] mt-5 flex flex-col justify-start items-start gap-4">
-          <div className="w-full h-auto flex justify-start items-center gap-4">
+          verifyOtp();
+         
+        }} className="w-full md:w-[393px] mt-5 flex flex-col justify-center items-center gap-4">
+          <div className="w-full h-auto flex justify-center items-center gap-4">
             {otp.map((_, index) => {
               return (
                 <input
@@ -112,7 +183,7 @@ export default function VerifyOtp() {
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            <span>Submit</span>
+            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Submit</span>}
           </button>
         </form>
       </div>

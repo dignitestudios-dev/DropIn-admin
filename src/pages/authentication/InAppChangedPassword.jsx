@@ -5,7 +5,9 @@ import { UpdatePasswordValues } from "../../init/authentication/authentication";
 import { UpdateSchema } from "../../schema/authentication/authenticationSchema";
 import UpdatePasswordSuccessfully from "../../components/authentication/UpdatePasswordSuccessFully";
 import useApp, { AppContext } from "../../context/AppContext";
-
+import axios from "../../axios";
+import { FiLoader } from "react-icons/fi";
+import { ErrorToast } from "../../components/global/Toaster";
 export default function InAppChangedPassword() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [IsNewPassword, setIsNewPassword] =
@@ -13,7 +15,7 @@ export default function InAppChangedPassword() {
   const [isReEnterPassword, setIsReEnterPassword] =
     useState(false);
     const {updatePasswordSuccessfully,setUpdatePasswordSuccessfully}=useApp(AppContext);
-    
+    const [loading,setloading]=useState(false)
     
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
@@ -22,9 +24,32 @@ export default function InAppChangedPassword() {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: async (values, action) => {
-        console.log(updatePasswordSuccessfully,"testt");
-        setUpdatePasswordSuccessfully(!updatePasswordSuccessfully)
-        const data = {};
+        try {
+          if (values.newPassword !== values.reEnterPassword) {
+            ErrorToast("Passwords do not match");
+            return;
+          }
+          setloading(true)
+          const payload = {
+            currentPassword: values.oldPassword,
+            newPassword: values.newPassword,
+          };
+          const response = await axios.post("auth/change-password", payload);
+          if (response.status === 200) {
+            // Optionally call setUpdatePasswordSuccessfully(true) or show a toast
+            setUpdatePasswordSuccessfully(true);
+            // Optionally reset form or navigate
+            action.resetForm();
+          } else {
+            // Handle error
+            console.error("Password change failed", response.data?.message);
+          }
+        } catch (error) {
+          // Handle error
+          console.error("Password change error", error.response?.data?.message || error.message);
+        } finally {
+          setloading(false)
+        }
       },
     });
   return (
@@ -157,7 +182,7 @@ export default function InAppChangedPassword() {
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            <span>Save</span>
+            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Save</span>}
           </button>
         </form>
       </div>

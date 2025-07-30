@@ -55,7 +55,7 @@ const EditCategory = ({ isOpen, setIsOpen }) => {
           }}
           className="w-full mt-3 flex flex-col justify-start items-start "
         >
-          <div className="w-full h-auto flex flex-col justify-start items-start gap-1">
+          {/* <div className="w-full h-auto flex flex-col justify-start items-start gap-1">
             <label
               htmlFor="pic"
               className="text-white flex items-center gap-3 font-medium  text-sm leading-[21px]"
@@ -82,7 +82,7 @@ const EditCategory = ({ isOpen, setIsOpen }) => {
             {errors.pic && touched.pic ? (
               <p className="text-red-700 text-sm font-medium">{errors.pic}</p>
             ) : null}
-          </div>
+          </div> */}
           <div className="w-full mt-4 h-auto flex flex-col justify-start items-start gap-1">
             <label
               htmlFor=""
@@ -108,31 +108,7 @@ const EditCategory = ({ isOpen, setIsOpen }) => {
               <p className="text-red-700 text-sm font-medium">{errors.name}</p>
             ) : null}
           </div>
-          <div className="w-full mt-4 h-auto flex flex-col justify-start items-start gap-1">
-            <label
-              htmlFor=""
-              className="text-white font-medium  text-sm leading-[21px]"
-            >
-              Sub Category
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none  rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
-                errors?.name && touched?.name
-                  ? "border-red-500"
-                  : "border-[#F4F4F4] "
-              }`}
-              placeholder="Enter Category name"
-            />
-            {errors.name && touched.name ? (
-              <p className="text-red-700 text-sm font-medium">{errors.name}</p>
-            ) : null}
-          </div>
+         
           <button
             type="submit"
             className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
@@ -140,14 +116,7 @@ const EditCategory = ({ isOpen, setIsOpen }) => {
             Save
           </button>
         </form>
-        <div className="inline-flex mt-3 w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">          
-          <div className="whitespace-nowrap text-xs font-medium text-white">
-            Music Festivals
-          </div>
-          <div className="ms-2.5 inline-flex w-full justify-end items-center size-5 rounded-full cursor-pointer">
-            <IoMdClose className="text-white text-2xl" />
-          </div>
-        </div>
+        
       </div>
     </Modal>
   );

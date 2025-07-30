@@ -1,8 +1,10 @@
 import { person, view } from "../../../assets/export";
+import { dateFormate } from "../../../lib/helpers";
 import Pagination from "../../global/Pagination";
 import { useNavigate } from "react-router";
 
-export default function UserList() {
+export default function UserList({userList,pagnition,setPageNo}) {
+
   const navigate = useNavigate("");
   return (
     <div  >
@@ -18,19 +20,19 @@ export default function UserList() {
         </div>
 
         {/* User Rows */}
-        {[1, 2, 3, 4, 5, 6].map((index) => (
+        {userList?.map((user,index) => (
           <div key={index}>
             {/* Mobile View */}
             <div className="md:hidden  bg-opacity-40 rounded-[15px] p-4 mb-4">
               <div className="flex items-center gap-4 mb-4">
                 <img
-                  src={person}
+                  src={user.profilePicture}
                   alt="Profile"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
                   <p className="font-medium text-[14px] text-white">
-                    mike smith
+                    {user.firstName}
                   </p>
                   <p className="text-[12px] text-white/70">@mikesmith</p>
                 </div>
@@ -39,20 +41,20 @@ export default function UserList() {
               <div className="space-y-3 mb-4">
                 <div className="flex items-center text-[12px] text-white">
                   <span className="w-24 opacity-70">Email:</span>
-                  <span>mikesmith12@gmail.com</span>
+                  <span>{user.email}</span>
                 </div>
                 <div className="flex items-center text-[12px] text-white">
                   <span className="w-24 opacity-70">Contact:</span>
-                  <span>(619) 602-6578 x6033</span>
+                  <span>{user.phone}</span>
                 </div>
                 <div className="flex items-center text-[12px] text-white">
                   <span className="w-24 opacity-70">Registered:</span>
-                  <span>11/22/44</span>
+                  <span>{user.createdAt}</span>
                 </div>
               </div>
 
               <button
-                onClick={() => navigate("/user/1")}
+                onClick={() => navigate(`/users/${user._id}`,{state:{user}})}
                 className="bg-[#2F7EF7] flex items-center justify-center w-full text-white px-4 py-2 rounded-[8px] text-[12px] gap-2"
               >
                 <img src={view} alt="" className="w-5 h-5" /> View
@@ -63,21 +65,21 @@ export default function UserList() {
             <div className="hidden md:grid grid-cols-12 gap-4 items-center border-b border-[#313131]   py-2 mb-4 text-white text-[12px]">
               <div className="col-span-2 flex items-center justify-start gap-3">
                 <img
-                  src={person}
+                  src={user.profilePicture}
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
-                <span className="text-wrap lg:text-nowrap" >Mike smith</span>
+                <span className="text-wrap lg:text-nowrap" >{user.firstName}</span>
               </div>
               <div className="col-span-2 text-left break-words text-wrap">
-                mikesmith12@gmail.com
+                {user.email || " Unavailable"}
               </div>
-              <div className="col-span-2 text-left break-words">(619) 602-6578 x6033</div>
-              <div className="col-span-2 text-left break-words">@mikesmith</div>
-              <div className="col-span-2 text-left break-words">11/22/44</div>
+              <div className="col-span-2 text-left break-words">{user.phone || " Unavailable"}</div>
+              <div className="col-span-2 text-left break-words">{user.lastName || " Unavailable"}</div>
+              <div className="col-span-2 text-left break-words"> {dateFormate(user.createdAt) || "-"}</div>
               <div className="col-span-2 flex justify-start">
                 <button
-                  onClick={() => navigate("/user/1")}
+                  onClick={() => navigate(`/users/${user._id}`,{state:{user}})}
                   className="bg-[#2F7EF7] flex items-center justify-center px-4 py-2 rounded-[8px] gap-2"
                 >
                   <img src={view} alt="" className="w-5 h-5" /> View
@@ -89,7 +91,7 @@ export default function UserList() {
       </div>
 
       <div className="flex justify-end">
-        <Pagination />
+        <Pagination pagnition={pagnition} setPageNo={setPageNo}/>
       </div>
     </div>
   );

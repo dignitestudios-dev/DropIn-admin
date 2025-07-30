@@ -2,9 +2,15 @@ import React from "react";
 import useApp, { AppContext } from "../../context/AppContext";
 import { Checkbox } from "../../assets/export";
 import { useNavigate } from "react-router";
+import Cookies from "js-cookie";
 const LogOutModal = () => {
   const { logOutModal,setLogOutModal } = useApp(AppContext);
-  const navigate=useNavigate(""); 
+  const navigate=useNavigate("");
+  const handleLogOut = () => {
+    Cookies.remove("token");
+    Cookies.remove("user");
+    navigate("/auth/login");
+  }; 
   return (
     logOutModal && (
       <div className="w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0.4)] fixed top-0 left-0 right-0 bottom-0 z-30 px-4">
@@ -20,8 +26,8 @@ const LogOutModal = () => {
               setLogOutModal(!logOutModal)
             }} className="bg-[#0E0E0E] text-white text-sm px-4 py-1 rounded-[14px] w-[180px] h-[44px]">No</button>
             <button onClick={()=>{  
-               setLogOutModal(!logOutModal)                          
-              navigate("/auth/login")                             
+               setLogOutModal(!logOutModal)
+               handleLogOut()                          
             }}  className="w-[180px] h-[44px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium">Yes</button>
             
           </div>

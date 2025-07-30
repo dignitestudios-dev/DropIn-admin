@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiLoader } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router";
 import { Logo } from "../../assets/export";
@@ -6,9 +6,12 @@ import { useFormik } from "formik";
 import { ForgotSchema } from "../../schema/authentication/authenticationSchema";
 import { forgotValues } from "../../init/authentication/authentication";
 import { FaArrowLeftLong } from "react-icons/fa6";
-
+import axios from "../../axios";
+import { ErrorToast } from "../../components/global/Toaster";
+import { SuccessToast } from "../../components/global/Toaster";
 export default function ForgotPassword() {
   const navigate = useNavigate("");
+  const [loading,setloading]=useState(false)
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: forgotValues,
@@ -16,10 +19,30 @@ export default function ForgotPassword() {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: async (values, action) => {
-        navigate("/auth/verifyOtp");
-        const data = {
-          email: values?.email,
-        };
+        try {
+          setloading(true)
+          // Send email for password reset
+          const response = await axios.post(
+            "/auth/send-reset-otp",
+           
+            {
+              email: values.email,
+            }
+          );
+          console.log(response, "response");
+          if (response?.status === 200) {
+            sessionStorage.setItem("email", values.email);
+            navigate("/auth/verifyOtp");
+            SuccessToast(response?.data?.message);
+          }
+          // Navigate to OTP verificatio
+        } catch (error) {
+          ErrorToast(
+            error.response?.data?.message || "Failed to send reset email"
+          );
+        } finally {
+          setloading(false)
+        }
       },
     });
 
@@ -77,8 +100,7 @@ export default function ForgotPassword() {
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            {" "}
-            Send Otp
+            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Send Otp</span>}
           </button>
         </form>
       </div>

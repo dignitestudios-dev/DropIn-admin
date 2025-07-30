@@ -3,8 +3,9 @@ import { person, view } from "../../../assets/export";
 import Pagination from "../../global/Pagination";
 import ReportedUserModal from "./ReportedUserModal";
 
-export default function ReportedUsers() {
+export default function ReportedUsers({reportList}) {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(reportList,"reportList")
   return (
     <div>
       <div className="bg-[#13131399] h-[67vh] table-scroller mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 sm:px-5 mb-6">
@@ -28,7 +29,7 @@ export default function ReportedUsers() {
         </div>
 
         {/* Report Rows */}
-        {[1, 2, 3, 4, 5, 6].map((index) => (
+        {reportList?.map((index) => (
           <div key={index}>
             {/* Mobile View */}
             <div className="md:hidden bg-black bg-opacity-40 rounded-[15px] p-4 mb-4 text-white">

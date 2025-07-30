@@ -20,52 +20,64 @@ ChartJS.register(
   Title
 );
 
-const HorizontalBarChart = () => {
+const HorizontalBarChart = ({eGraphData}) => {
   const labels = ["Live Events", "Featured Events", "Private Events"];
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        data: [2000, 0, 0],
-        backgroundColor: "#2F7EF7",
-        label: "Live Events", // Label for the first bar
-      },
-      {
-        data: [0, 4000, 0], // Values for each bar
-        backgroundColor: "#85F4FA", // Color for the second bar
-        label: "Featured Events", // Label for the second bar
-      },
-      {
-        data: [0, 0, 6000], // Values for each bar
-        backgroundColor: "#858FFA", // Color for the third bar
-        label: "Private Events", // Label for the third bar
-      },
-    ],
-  };
+console.log(eGraphData,"eGraphData")
+const data = {
+  labels: ["Events"], 
+   // only one group on Y-axis
+  datasets: [
+    {
+      label: "Live Events",
+      data: [eGraphData?.liveCount || 0],
+      backgroundColor: "#2F7EF7",
+      barThickness: 50,
+    },
+    {
+      label: "Featured Events",
+      data: [eGraphData?.featuredCount || 0],
+      backgroundColor: "#85F4FA",
+      barThickness: 50,
+    },
+    {
+      label: "Private Events",
+      data: [eGraphData?.privateCount || 0],
+      backgroundColor: "#858FFA",
+      barThickness: 50,
+    },
+  ],
+};
 
   const options = {
-    tooltips: {
-      enabled: false,
-    },
+    indexAxis: "y", // Horizontal bars
     responsive: true,
-    maintainAspectRatio: false,
-    aspectRatio: 1,
+      maintainAspectRatio: false,
+      
     plugins: {
       legend: {
-        onClick: null,
-        position: "top", // Keep it at the top
-        align: "center", // Center horizontally
+        position: "top",
+          align: "center",
         labels: {
-          usePointStyle: true,
+          usePointStyle: true ,
         },
-        
       },
     },
-
-    barPercentage: 2.5,
-    categoryPercentage: 1.3,
-    indexAxis: "y", // Horizontal Bar Chart
+    scales: {
+      x: {
+        stacked: false,
+        // spacing between categories (rows)
+        ticks: {
+          gap: 10,
+          padding: 5, // increases gap between rows
+          font: {
+            size: 14,
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
@@ -76,13 +88,13 @@ const HorizontalBarChart = () => {
       {/* <button className="flex items-center  bg-transparent absolute top-6 right-2 text-[#8A92A6] text-[12px] font-[400] ">
       This Week <MdKeyboardArrowDown size={23} color="white" />{" "}
       </button> */}
-      <select
+      <div
         name=""
         id=""
-        className="bg-transparent cursor-pointer text-[#8A92A6] outline-none absolute top-12 right-2 text-[12px] font-[400]"
+        className="bg-transparent  text-[#8A92A6] outline-none absolute top-12 right-2 text-[12px] font-[400]"
       >
-        <option value="This Week">This Week</option>
-      </select>
+        This Week
+      </div>
       <Bar
         data={data}
         options={options}
