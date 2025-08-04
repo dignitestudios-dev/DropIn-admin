@@ -11,11 +11,11 @@ export const AppContextProvider = ({ children }) => {
     useState(false);
   const [logOutModal, setLogOutModal] = useState(false);
   const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(Cookies.get("user")));
 
   const handleLogin = (data) => {
     Cookies.set("token", data?.token);
-    Cookies.set("user", data?.user);
+    Cookies.set("user", JSON.stringify(data?.user));
     setToken(data?.token);
     setUser(data?.user);
   };
@@ -29,12 +29,13 @@ export const AppContextProvider = ({ children }) => {
 
   const getToken = () => {
     setToken(Cookies.get("token"));
-    setUser(Cookies.get("user"));
+    setUser(JSON.parse(Cookies.get("user")));
   };
   useEffect(() => {
     getToken();
   }, []);
 
+console.log(user,"user11111111")
   // Send fcm to backend:
   // const fetchToken = async () => {
   //   const token = await getFCMToken();

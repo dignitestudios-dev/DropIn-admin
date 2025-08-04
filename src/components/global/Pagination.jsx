@@ -6,6 +6,7 @@ export default function Pagination({pagnition,setPageNo}) {
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   const handlePageChange = (page) => {
+   
     setPageNo(page);
   };
 

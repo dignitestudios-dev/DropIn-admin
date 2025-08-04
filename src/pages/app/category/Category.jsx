@@ -16,6 +16,7 @@ export default function Category() {
   const [pageNo, setPageNo] = useState(1);
   const [categoryData, setCategoryData] = useState([]);
   const [pagnition, setPagnition] = useState({});
+  const [editdata,setEditdata]=useState({})
   const getCategoryData = async () => {
     try {
       setLoading(true);
@@ -46,7 +47,7 @@ export default function Category() {
           Add Category{" "}
         </button>
       </div>
-      <div className=" rounded-[15px] p-4 mt-5 h-[63vh] overflow-auto table-scroller flex flex-col gap-8 ">
+      <div className=" p-4 mt-5 h-[63vh] overflow-auto table-scroller flex flex-col gap-8 ">
         {categoryData.map((item, index) => {
           return (
             <CategoryChip
@@ -56,6 +57,7 @@ export default function Category() {
               pagnition={pagnition}
               categoryData={item}
               key={index}
+              setEditdata={setEditdata}
             />
           );
         })}
@@ -63,11 +65,11 @@ export default function Category() {
         <div className="flex justify-end items-end  h-[10vh]">
           <Pagination setPageNo={setPageNo} pagnition={pagnition} />
         </div>
-      <CreateCategory setIsOpen={setIsCategory} isOpen={isCategory} />
-      <EditCategory setIsOpen={setIsEditCategory} isOpen={isEditCategory} />
+      <CreateCategory setIsOpen={setIsCategory} isOpen={isCategory} getCategoryData={getCategoryData}/>
+      <EditCategory setIsOpen={setIsEditCategory} isOpen={isEditCategory} editdata={editdata} getCategoryData={getCategoryData}/>
       {/* <DeleteModal setIsOpen={setIsDelCategory} isOpen={isDelCategory} setMoveSubCateg={setMoveSubCateg} moveSubCateg={moveSubCateg} /> */}
       {/* <MoveSubCategory setIsOpen={setMoveSubCateg} isOpen={moveSubCateg} isSuccess={SuccessCateg} setSuccess={setSuccessCateg} /> */}
-      <SuccessCategory setIsOpen={setSuccessCateg} isOpen={SuccessCateg} />
+      {/* <SuccessCategory setIsOpen={setSuccessCateg} isOpen={SuccessCateg} /> */}
     </div>
   );
 }

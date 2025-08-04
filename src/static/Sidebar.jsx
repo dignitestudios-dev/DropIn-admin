@@ -37,10 +37,10 @@ export const sidebarData = [
     whiteIcon:categoryWhite,
     link: "/category",
   },
-  {
-    title: "Help & Feedback",
-    icon: help,
-    whiteIcon:helpWhite,
-    link: "/help",
-  },
+  // {
+  //   title: "Help & Feedback",
+  //   icon: help,
+  //   whiteIcon:helpWhite,
+  //   link: "/help",
+  // },
 ];

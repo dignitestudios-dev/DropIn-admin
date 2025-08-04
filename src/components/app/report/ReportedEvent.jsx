@@ -2,9 +2,12 @@ import { useState } from "react";
 import { EventList, person, view } from "../../../assets/export";
 import Pagination from "../../global/Pagination";
 import ReportedEventModal from "./ReportedEventModal";
+import { dateFormate } from "../../../lib/helpers";
 
-export default function ReportedEvents() {
+export default function ReportedEvents({reportList,pagination,setPageNo}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [eventDetail,setEventDetail] = useState()
+  console.log(reportList,"reportEventList")
   return (
     <div>
       <div className="bg-[#13131399] mt-3 rounded-[25px] h-[67vh] table-scroller overflow-x-auto whitespace-nowrap px-2 sm:px-5 mb-6 ">
@@ -17,7 +20,7 @@ export default function ReportedEvents() {
             Reason
           </div>
           <div className="col-span-3 py-4 text-left font-semibold text-[11px] md:pl-6 lg:pl-20">
-            Event
+            Reported User
           </div>
           <div className="col-span-3 py-4 text-left font-semibold text-[11px]">
             Report Date
@@ -28,18 +31,18 @@ export default function ReportedEvents() {
         </div>
 
         {/* Report Rows */}
-        {[1, 2, 3, 4, 5, 6].map((index) => (
+        {reportList?.map((item,index) => (
           <div key={index}>
             {/* Mobile View */}
             <div className="md:hidden bg-black bg-opacity-40 rounded-[15px] p-4 mb-4 text-white">
               <div className="flex items-center gap-4 mb-4">
                 <img
-                  src={person}
+                  src={item?.reporter?.profilePicture}
                   alt="Profile"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-medium text-[14px]">mike smith</p>
+                  <p className="font-medium text-[14px]">{item?.reporter?.firstName}</p>
                   <p className="text-[12px] text-white/70">Reported User</p>
                 </div>
               </div>
@@ -48,8 +51,7 @@ export default function ReportedEvents() {
                 <div className="text-[12px]">
                   <p className="text-white/70 mb-1">Reason:</p>
                   <p className="leading-relaxed text-wrap">
-                    Lorem ipsum dolor sit amet consectetur. Donec mattis
-                    vestibulum.
+                   {item?.reason}
                   </p>
                 </div>
 
@@ -57,17 +59,17 @@ export default function ReportedEvents() {
                   <p className="text-white/70 text-[12px]">Event:</p>
                   <div className="flex items-center gap-2">
                     <img
-                      src={EventList}
+                      src={item?.reportedUser?.profilePicture}
                       alt="Event"
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-[12px]">Event Name</span>
+                    <span className="text-[12px]">{item?.reportedUser?.firstName}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center text-[12px]">
                   <span className="w-24 text-white/70">Report Date:</span>
-                  <span>11/22/44</span>
+                  <span>{dateFormate(item?.createdAt)}</span>
                 </div>
               </div>
 
@@ -85,42 +87,41 @@ export default function ReportedEvents() {
               {/* Name */}
               <div className="col-span-1 flex items-center gap-3">
                 <img
-                  src={person}
+                  src={item?.reporter?.profilePicture}
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-[10px] lg:text-[12px] text-wrap lg:text-nowrap font-medium whitespace-normal">
-                  Mike smith
+                  {item?.reporter?.firstName}
                 </span>
               </div>
 
               {/* Reason */}
               <div className="col-span-3 md:pl-6 lg:pl-20">
                 <p className="text-[10px] lg:text-[12px] leading-relaxed whitespace-normal pr-4">
-                  Lorem ipsum dolor sit amet consectetur. Donec mattis
-                  vestibulum.
+                  {item?.reason}
                 </p>
               </div>
 
               {/* Event */}
               <div className="col-span-3 md:pl-6 lg:pl-20 flex items-center gap-3">
                 <img
-                  src={EventList}
+                  src={item?.reportedUser?.profilePicture}
                   alt="Event"
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-[12px] whitespace-normal">
-                  Event Name
+                  {item?.reportedUser?.firstName}
                 </span>
               </div>
 
               {/* Report Date */}
-              <div className="col-span-3 text-[12px]">11/22/44</div>
+              <div className="col-span-3 text-[12px]">{dateFormate(item?.createdAt)}</div>
 
               {/* Action */}
               <div className="col-span-2 flex justify-start">
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {setIsOpen(!isOpen) ; setEventDetail(item)}}
                   className="bg-[#2F7EF7] flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
                 >
                   <img src={view} alt="" className="w-4 h-4" />
@@ -132,9 +133,9 @@ export default function ReportedEvents() {
         ))}
       </div>
       <div className="flex justify-end">
-        <Pagination />
+        <Pagination pagnition={pagination} setPageNo={setPageNo}/>
       </div>
-      <ReportedEventModal setIsOpen={setIsOpen} isOpen={isOpen} />
+      <ReportedEventModal setIsOpen={setIsOpen} isOpen={isOpen} eventDetail={eventDetail} />
     </div>
   );
 }

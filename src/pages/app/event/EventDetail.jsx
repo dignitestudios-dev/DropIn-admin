@@ -44,7 +44,7 @@ const event=location.state?.event
     getEventDetail()
     getEventPeopleGoing()
   },[])
-  console.log(eventDetail,"eventDetail")
+  
   return (
     loadingDetail ? <EventDetailSkeleton/> : (
     <div>

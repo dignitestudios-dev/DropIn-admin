@@ -5,30 +5,66 @@ import { IoMdClose } from "react-icons/io";
 import { categoryValues } from "../../../init/app/App";
 import { music, uploadIcon } from "../../../assets/export";
 import { useState } from "react";
-const CreateCategory = ({ isOpen, setIsOpen }) => {
+import axios from "../../../axios";
+import { SuccessToast } from "../../global/Toaster";
+const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
   const [imagePreview, setImagePreview] = useState(uploadIcon); // State for image preview
-  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
-    useFormik({
-      initialValues: categoryValues,
-      validationSchema: categorySchema,
-      validateOnChange: true,
-      validateOnBlur: true,
-      onSubmit: async (values, action) => {
-        const data = {};
-      },
-    });
+  const [loading, setLoading] = useState(false);
+  const [subCategory, setSubCategory] = useState([]);
+  const [subCategoryInput, setSubCategoryInput] = useState(""); // 🔁 this is new
+
+  console.log(subCategory, "subCategory");
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: categoryValues,
+    validationSchema: categorySchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: async (values, action) => {
+      const data = new FormData();
+      data.append("categoryName", values.name);
+      data.append("icon", values.pic);
+
+      subCategory.forEach((item) => {
+        data.append("subcategoryNames[]", item);
+      });
+
+      try {
+        setLoading(true);
+        const response = await axios.post(`/category/create-category`, data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        if (response.status === 200) {
+          action.resetForm();
+          setSubCategory([]); // 🔁 reset subcategories
+          setImagePreview(uploadIcon); // 🔁 reset image
+          setIsOpen(false);
+          SuccessToast("Category created successfully");
+          getCategoryData();
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the selected file
+    const file = e.target.files[0];
     if (file) {
-      // Log file path (or use the file object if needed)
-      console.log("Selected file:", file);
-      // Set image preview if the file is an image
-      const fileReader = new FileReader();
-      fileReader.onloadend = () => {
-        setImagePreview(fileReader.result); // Set preview URL
-      };
-      fileReader.readAsDataURL(file);
+      setFieldValue("pic", file);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
     }
   };
 
@@ -55,10 +91,11 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
           }}
           className="w-full mt-3 flex flex-col justify-start items-start "
         >
-          <div className="w-full h-auto flex flex-col justify-start items-start gap-1">
+          {/* Image Upload */}
+          <div className="flex flex-col gap-1">
             <label
               htmlFor="pic"
-              className="text-white flex items-center gap-3 font-medium  text-sm leading-[21px]"
+              className="text-white flex items-center gap-3 text-sm font-medium"
             >
               <img
                 src={imagePreview}
@@ -71,17 +108,13 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
               type="file"
               id="pic"
               name="pic"
-              value={values.pic}
-              onChange={(e) => {
-                handleChange(e);
-                handleFileChange(e);
-              }}
+              onChange={handleFileChange}
               onBlur={handleBlur}
-              className={` hidden`}
+              className="hidden"
             />
-            {errors.pic && touched.pic ? (
+            {errors.pic && touched.pic && (
               <p className="text-red-700 text-sm font-medium">{errors.pic}</p>
-            ) : null}
+            )}
           </div>
           <div className="w-full mt-4 h-auto flex flex-col justify-start items-start gap-1">
             <label
@@ -117,35 +150,68 @@ const CreateCategory = ({ isOpen, setIsOpen }) => {
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
+              id="subCategory"
+              name="subCategoryInput" // ✅ Don't use "subCategory" here
+              value={subCategoryInput}
+              onChange={(e) => setSubCategoryInput(e.target.value)}
               onBlur={handleBlur}
-              className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none  rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
-                errors?.name && touched?.name
+              className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
+                errors?.subCategory && touched?.subCategory
                   ? "border-red-500"
-                  : "border-[#F4F4F4] "
+                  : "border-[#F4F4F4]"
               }`}
-              placeholder="Enter Category name"
+              placeholder="Enter Subcategory"
             />
-            {errors.name && touched.name ? (
-              <p className="text-red-700 text-sm font-medium">{errors.name}</p>
+
+            {errors.subCategory && touched.subCategory ? (
+              <p className="text-red-700 text-sm font-medium">
+                {errors.subCategory}
+              </p>
             ) : null}
           </div>
-          <button
-            type="submit"
-            className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
-          >
-            Add
-          </button>
-        </form>
-        <div className="inline-flex mt-3 w-full sm:w-auto flex-nowrap items-center bg-[#434343]  rounded-full p-1.5">          
-          <div className="whitespace-nowrap text-xs font-medium text-white">
-            Music Festivals
+          <div className="w-full mt-4 h-auto flex  justify-start items-start gap-1">
+            <button
+              className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
+              type="button"
+              onClick={() => {
+                if (subCategoryInput.trim()) {
+                  const updated = [...subCategory, subCategoryInput.trim()];
+                  setSubCategory(updated);
+                  setSubCategoryInput(""); // clear input box
+                  setFieldValue("subCategory", updated); // update Formik value
+                }
+              }}
+            >
+              Add Subcategory
+            </button>
+
+            <button
+              type="submit"
+              className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
+            >
+              {loading ? "Loading..." : "Save"}
+            </button>
           </div>
-          <div className="ms-2.5 inline-flex w-full justify-end items-center size-5 rounded-full cursor-pointer">
-            <IoMdClose className="text-white text-2xl" />
+        </form>
+        <div className="inline-flex flex-col mt-3 w-full sm:w-auto flex-nowrap items-center   rounded-full p-1.5">
+          <div className="flex flex-col gap-2 mt-3">
+            {subCategory.map((item, index) => (
+              <div
+                key={index}
+                className="inline-flex items-center bg-[#434343] rounded-full px-3 py-1 text-white text-sm"
+              >
+                {item}
+                <button
+                  type="button"
+                  className="ml-2"
+                  onClick={() =>
+                    setSubCategory(subCategory.filter((_, i) => i !== index))
+                  }
+                >
+                  <IoMdClose className="text-white text-base" />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -32,7 +32,6 @@ export default function PushNotification() {
   useEffect(()=>{
     getNotificationList()
   },[])
-  console.log(notificationList,"notificationList")
   return (
     <div>
       <div className="flex justify-between items-center">

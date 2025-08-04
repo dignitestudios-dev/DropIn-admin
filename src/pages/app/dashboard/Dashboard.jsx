@@ -43,7 +43,7 @@ const Dashboard = () => {
     getLineGraph()
     eventGraph()
   },[])
-  console.log(lineGraphData ,"lineGraphData")
+
   return (
     <div>
       <div className="relative w-[100%] flex justify-center">
@@ -55,7 +55,7 @@ const Dashboard = () => {
       </div>
       <div className="p-5">
         <h3 className="text-[28px] font-[500] text-white">
-          Hello Austin Robertson !
+         Dashboard
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 mt-10">
           <div className="backdrop-blur-[50px] bg-[#13131399]  flex p-5 rounded-[15px] items-center justify-between">

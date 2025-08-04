@@ -3,10 +3,12 @@ import { person, view } from "../../../assets/export";
 import Pagination from "../../global/Pagination";
 import ReportedUserModal from "./ReportedUserModal";
 import { dateFormate } from "../../../lib/helpers";
+import ReportedGroupModal from "./ReportedGroupModal";
 
-export default function ReportedUsers({reportList,pagination,setPageNo}) {
+export default function ReportedGroup({reportList,pagination,setPageNo}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [userDetail,setUserDetail] = useState()
+  const [groupDetail, setGroupDetail] = useState({});
+  console.log(reportList,"reporGrouptList")
   return (
     <div>
       <div className="bg-[#13131399] h-[67vh] table-scroller mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 sm:px-5 mb-6">
@@ -38,10 +40,10 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
                 <img
                   src={item?.reporter?.profilePicture}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full "
+                  className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-medium text-[14px]">{item?.reporter?.name}</p>
+                  <p className="font-medium text-[14px]">{item?.reporter?.firstName}</p>
                   <p className="text-[12px] text-white/70">Reported User</p>
                 </div>
               </div>
@@ -50,7 +52,7 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
                 <div className="text-[12px]">
                   <p className="text-white/70 mb-1">Reason:</p>
                   <p className="leading-relaxed text-wrap">
-                    {item?.reason}
+                   {item?.reason}
                   </p>
                 </div>
 
@@ -58,22 +60,22 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
                   <p className="text-white/70 text-[12px]">Reported:</p>
                   <div className="flex items-center gap-2">
                     <img
-                      src={item?.reporterUser?.profilePicture}
+                      src={item?.reportedUser?.profilePicture}
                       alt="Reported User"
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-[12px]">{item?.reporterUser?.firstName }</span>
+                    <span className="text-[12px]">{item?.reportedUser?.firstName}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center text-[12px]">
                   <span className="w-24 text-white/70">Report Date:</span>
-                  <span>11/22/44</span>
+                  <span>{dateFormate(item?.createdAt)}</span>
                 </div>
               </div>
 
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {setIsOpen(!isOpen); setGroupDetail(item)}}
                 className="bg-[#2F7EF7] w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
               >
                 <img src={view} alt="" className="w-4 h-4" />
@@ -88,7 +90,7 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
                 <img
                   src={item?.reporter?.profilePicture}
                   alt="Profile"
-                  className=" w-10 h-10 rounded-full "
+                  className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-[10px] lg:text-[12px] text-wrap lg:text-nowrap font-medium whitespace-normal">
                   {item?.reporter?.firstName}
@@ -107,7 +109,7 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
                 <img
                   src={item?.reportedUser?.profilePicture}
                   alt="Reported User"
-                  className="w-10 h-10 rounded-full "
+                  className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-[12px] whitespace-normal">
                   {item?.reportedUser?.firstName}
@@ -120,7 +122,7 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
               {/* Action */}
               <div className="col-span-2 flex justify-start">
                 <button
-                  onClick={() => {setIsOpen(!isOpen); setUserDetail(item)}}
+                  onClick={() => {setIsOpen(!isOpen); setGroupDetail(item)}}
                   className="bg-[#2F7EF7] flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
                 >
                   <img src={view} alt="" className="w-4 h-4" />
@@ -134,7 +136,7 @@ export default function ReportedUsers({reportList,pagination,setPageNo}) {
       <div className="flex justify-end">
         <Pagination pagnition={pagination} setPageNo={setPageNo}/>
       </div>
-      <ReportedUserModal setIsOpen={setIsOpen} isOpen={isOpen} userDetail={userDetail}  />
+      <ReportedGroupModal setIsOpen={setIsOpen} isOpen={isOpen} groupDetail={groupDetail}/>
     </div>
   );
 }

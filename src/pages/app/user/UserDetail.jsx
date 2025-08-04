@@ -20,7 +20,7 @@ const [loadingReviews,setLoadingReviews]=useState(false)
 const [connections,setConnections]=useState()
 const [loadingConnections,setLoadingConnections]=useState(false)
 const [loadingRestrict,setLoadingRestrict]=useState(false)
-console.log(user,"user")
+
 const getEvents=async()=>{
   try {
     setLoadingEvents(true)

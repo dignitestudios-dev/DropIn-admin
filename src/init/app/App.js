@@ -6,4 +6,9 @@ export const notificationValues = {
 export const categoryValues = {
     name: "",
     pic: "",
+    subCategory: [],
+  };
+
+  export const editCategoryValues = {
+    newName: "",
   };

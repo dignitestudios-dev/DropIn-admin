@@ -54,11 +54,32 @@ import runIcon from "./run.png";
 import otherIcon from "./other.png";
 import successCateg from "./success-categ.png";
 
-// export {
-//     FILENAME(PASCALCASE)
-// }
 
+
+
+
+import arts from "./arts_events.png";
+import educational from "./educational.png";
+import fitness from "./fitness_wellness_events.png";
+import food from "./food_events.png";
+import networking from "./networking_events.png";
+import nightlife from "./nightlife_events.png";
+import volunteering from "./volunteering_events.png";
+
+import outdoor from "./outdoor_events.png";
+import social from "./social_events.png";
+import sports from "./sports_events.png";
 export {
+  arts,
+  educational,
+  fitness,
+  food,
+  networking,
+  nightlife,
+  volunteering,
+  outdoor,
+  social,
+  sports,
   successCateg,
   otherIcon,
   runIcon,

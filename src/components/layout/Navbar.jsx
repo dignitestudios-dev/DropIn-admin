@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const navigate = useNavigate("");
-  console.log(user,"user")
+  console.log(user,"user222222")
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
@@ -56,7 +56,7 @@ const Navbar = () => {
               className="rounded-full w-8 h-8 lg:h-12 lg:w-12"
               alt=""
             />
-            <div className="lg:block hidden">
+            <div className="">
               <h4 className="font-[400] text-[12px] lg:text-[16px] text-white">
                 {user?.name}
               </h4>

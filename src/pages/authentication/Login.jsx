@@ -15,8 +15,9 @@ const Login = () => {
   const {handleLogin} = useContext(AppContext)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate=useNavigate("")
+  const [loading,setloading]=useState(false)
   // const { loading, postData } = useLogin();
-const [loading,setloading]=useState(false)
+
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: loginValues,
@@ -25,6 +26,7 @@ const [loading,setloading]=useState(false)
       validateOnBlur: true,
       onSubmit: async (values, action) => {
         try {
+          setloading(true)
           const response = await axios.post("auth/login", {
             email: values.email,
             password: values.password,
