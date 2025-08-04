@@ -11,7 +11,10 @@ export const AppContextProvider = ({ children }) => {
     useState(false);
   const [logOutModal, setLogOutModal] = useState(false);
   const [token, setToken] = useState(null);
-  const [user, setUser] = useState(JSON.parse(Cookies.get("user")));
+  const [user, setUser] = useState(() => {
+    const cookieData = Cookies.get("user");
+    return cookieData ? JSON.parse(cookieData) : null;
+  });
 
   const handleLogin = (data) => {
     Cookies.set("token", data?.token);
@@ -29,7 +32,7 @@ export const AppContextProvider = ({ children }) => {
 
   const getToken = () => {
     setToken(Cookies.get("token"));
-    setUser(JSON.parse(Cookies.get("user")));
+    // setUser(JSON.parse(Cookies.get("user")));
   };
   useEffect(() => {
     getToken();
