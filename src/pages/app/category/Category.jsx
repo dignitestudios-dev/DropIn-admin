@@ -16,7 +16,8 @@ export default function Category() {
   const [pageNo, setPageNo] = useState(1);
   const [categoryData, setCategoryData] = useState([]);
   const [pagnition, setPagnition] = useState({});
-  const [editdata,setEditdata]=useState({})
+  const [editdata, setEditdata] = useState({});
+  const [update, setUpdate] = useState(false);
   const getCategoryData = async () => {
     try {
       setLoading(true);
@@ -33,7 +34,7 @@ export default function Category() {
   };
   useEffect(() => {
     getCategoryData();
-  }, [pageNo]);
+  }, [pageNo, update]);
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -57,16 +58,26 @@ export default function Category() {
               pagnition={pagnition}
               categoryData={item}
               key={index}
+              setUpdate={setUpdate}
               setEditdata={setEditdata}
             />
           );
         })}
       </div>
-        <div className="flex justify-end items-end  h-[10vh]">
-          <Pagination setPageNo={setPageNo} pagnition={pagnition} />
-        </div>
-      <CreateCategory setIsOpen={setIsCategory} isOpen={isCategory} getCategoryData={getCategoryData}/>
-      <EditCategory setIsOpen={setIsEditCategory} isOpen={isEditCategory} editdata={editdata} getCategoryData={getCategoryData}/>
+      <div className="flex justify-end items-end  h-[10vh]">
+        <Pagination setPageNo={setPageNo} pagnition={pagnition} />
+      </div>
+      <CreateCategory
+        setIsOpen={setIsCategory}
+        isOpen={isCategory}
+        getCategoryData={getCategoryData}
+      />
+      <EditCategory
+        setIsOpen={setIsEditCategory}
+        isOpen={isEditCategory}
+        editdata={editdata}
+        getCategoryData={getCategoryData}
+      />
       {/* <DeleteModal setIsOpen={setIsDelCategory} isOpen={isDelCategory} setMoveSubCateg={setMoveSubCateg} moveSubCateg={moveSubCateg} /> */}
       {/* <MoveSubCategory setIsOpen={setMoveSubCateg} isOpen={moveSubCateg} isSuccess={SuccessCateg} setSuccess={setSuccessCateg} /> */}
       {/* <SuccessCategory setIsOpen={setSuccessCateg} isOpen={SuccessCateg} /> */}

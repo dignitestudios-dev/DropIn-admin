@@ -20,7 +20,7 @@ export default function EventFilter({  type, setType, status, setStatus  }) {
       >
         <option className="text-black" value="featured">Featured</option>
         <option className="text-black" value="upcoming">Upcoming</option>
-        <option className="text-black" value="completed">Completed</option>
+        <option className="text-black" value="ended">Ended</option>
       </select>
 
       {/* City Filter */}
