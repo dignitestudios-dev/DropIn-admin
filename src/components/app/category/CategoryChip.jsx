@@ -16,9 +16,10 @@ import {
   volunteering,
 } from "../../../assets/export";
 import { CiEdit } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../../axios";
-import { SuccessToast } from "../../global/Toaster";
+import { ErrorToast, SuccessToast } from "../../global/Toaster";
+import { GoTrash } from "react-icons/go";
 
 export default function CategoryChip({
   setIsEditCategory,
@@ -27,9 +28,12 @@ export default function CategoryChip({
   setUpdate,
 }) {
   const [isSubEditModalOpen, setIsSubEditModalOpen] = useState(false);
+  const [isSubDeleteModalOpen, setIsSubDeleteModalOpen] = useState(false);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [newSubcategoryName, setNewSubcategoryName] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // 🌀 Loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [eventCount, setEventCount] = useState("");
+  const [eventloading, setEventloading] = useState(false);
 
   const categoryIcons = {
     C06: { icon: educational, alt: "educational" },
@@ -58,10 +62,64 @@ export default function CategoryChip({
       if (res?.status === 200) {
         SuccessToast(res?.data?.message);
         setIsSubEditModalOpen(false);
-        setUpdate((prev) => !prev); 
+        setUpdate((prev) => !prev);
       }
     } catch (error) {
       console.error("Error renaming subcategory:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (selectedSubcategory?._id) {
+      const fetchEventCount = async () => {
+        setEventloading(true);
+        try {
+          const response = await axios.get(
+            `/event/get-counts-by-sub-category/${selectedSubcategory._id}`
+          );
+          if (response.status === 200) {
+            setEventCount(response?.data?.data?.count); // backend se aayega event count
+          }
+        } catch (error) {
+          console.error("Error fetching events count:", error);
+        } finally {
+          setEventloading(false);
+        }
+      };
+
+      fetchEventCount();
+    }
+  }, [selectedSubcategory]);
+
+  const handleDeleteSubcategory = async () => {
+    if (!selectedSubcategory) {
+      return ErrorToast("Please select a subcategory!");
+    }
+
+    // If events exist -> dropdown must be selected
+    if (eventCount > 0 && !newSubcategoryName) {
+      return ErrorToast("Please select a subcategory to move events!");
+    }
+
+    setIsLoading(true);
+
+    try {
+      const res = await axios.post("/category/delete-subcategory", {
+        subcategoryID: selectedSubcategory._id,
+        targetSubcategoryID: newSubcategoryName,
+      });
+
+      if (res.status === 200) {
+        SuccessToast(res.data.message);
+        setIsSubDeleteModalOpen(false);
+        setSelectedSubcategory(null);
+        setNewSubcategoryName("");
+        setUpdate((prev) => !prev);
+      }
+    } catch (error) {
+      console.error("Error deleting subcategory:", error);
+      ErrorToast(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
     }
@@ -109,6 +167,16 @@ export default function CategoryChip({
             >
               <CiEdit size={18} color="#2F7EF7" />
             </button>
+            <button
+              className="ml-2"
+              onClick={() => {
+                setSelectedSubcategory(item);
+                setNewSubcategoryName("");
+                setIsSubDeleteModalOpen(true);
+              }}
+            >
+              <GoTrash size={18} color="red" />
+            </button>
           </div>
         ))}
       </div>
@@ -148,6 +216,63 @@ export default function CategoryChip({
                 ) : (
                   "Save"
                 )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal for Deleting Subcategory */}
+      {/* Modal for Deleting Subcategory */}
+      {isSubDeleteModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[#1e1e1e] rounded-2xl p-6 w-[90%] max-w-sm">
+            <h2 className="text-white text-lg font-semibold mb-4">
+              Delete Subcategory
+            </h2>
+
+            {/* Static number of events for now */}
+            <p className="text-[14px] text-gray-300 mb-5">
+              Subcategory: <strong>{selectedSubcategory?.name}</strong>
+            </p>
+            <p className="text-[14px] text-gray-300 mb-5">
+              Events in this subcategory:{" "}
+              {eventloading ? (
+                <span className="inline-block w-4  mt-3 h-2 bg-gray-700 rounded-md animate-pulse bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700"></span>
+              ) : (
+                <strong className="text-blue-400">{eventCount}</strong>
+              )}
+            </p>
+
+            <label className="text-gray-400 text-sm">Move events to:</label>
+            <select
+              className="w-full p-2 rounded-lg bg-[#333] text-white focus:outline-none mb-4"
+              value={newSubcategoryName}
+              onChange={(e) => setNewSubcategoryName(e.target.value)}
+            >
+              <option value="">Select New Subcategory</option>
+              {categoryData.subcategories
+                .filter((sub) => sub._id !== selectedSubcategory?._id)
+                .map((sub, idx) => (
+                  <option key={idx} value={sub._id}>
+                    {sub.name}
+                  </option>
+                ))}
+            </select>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setIsSubDeleteModalOpen(false)}
+                className="px-4 py-2 bg-gray-600 rounded-lg text-white hover:bg-gray-700"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleDeleteSubcategory}
+                disabled={isLoading}
+                className="px-4 py-2 bg-red-500 rounded-lg text-white hover:bg-red-700 disabled:opacity-50"
+              >
+                {isLoading ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>
