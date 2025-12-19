@@ -14,7 +14,7 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <Routes>
-      {/* Protected Routes */}
+     
       <Route
         path="/"
         element={

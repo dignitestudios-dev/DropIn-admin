@@ -1,47 +1,47 @@
 import { useFormik } from "formik";
 import Modal from "react-modal";
-import { categorySchema } from "../../../schema/app/AppSchema";
+import { categorySchema, subCategorySchema } from "../../../schema/app/AppSchema";
 import { IoMdClose } from "react-icons/io";
-import { categoryValues } from "../../../init/app/App";
+import { categoryValues, subCategoryValues } from "../../../init/app/App";
 import { music, uploadIcon } from "../../../assets/export";
 import { useState } from "react";
 import axios from "../../../axios";
 import { SuccessToast } from "../../global/Toaster";
-const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
-  const [imagePreview, setImagePreview] = useState(uploadIcon); // State for image preview
+const CreateSubCategory = ({ isOpen, setIsOpen, getCategoryData, data }) => {
   const [loading, setLoading] = useState(false);
-  const [subCategoryInput, setSubCategoryInput] = useState(""); // 🔁 this is new
+  
+ const [subCategoryInput, setSubCategoryInput] = useState("");
 
- 
+console.log(data, "data");
   const {
     values,
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldValue,
+    
     errors,
     touched,
   } = useFormik({
-    initialValues: categoryValues,
-    validationSchema: categorySchema,
+    initialValues: subCategoryValues,
+    validationSchema: subCategorySchema,
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, action) => {
       const data = new FormData();
-      data.append("categoryName", values.name);
-      data.append("icon", values.pic);
+      data.append("subcategoryName", values.subcategoryname);
+      data.append ("categoryID", values.Categoryid);
+     
 
- 
       try {
         setLoading(true);
-        const response = await axios.post(`/category/create-category`, data, {
+        const response = await axios.post(`/category/add-subcategory`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-
+setSubCategoryInput(response?.data)
         if (response.status === 200) {
+
           action.resetForm();
          
-          setImagePreview(uploadIcon); 
           setIsOpen(false);
           SuccessToast("Category created successfully");
           getCategoryData();
@@ -54,16 +54,8 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
     },
   });
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFieldValue("pic", file);
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
 
+console.log(subCategoryInput, "subCategoryInput");
   return (
     <Modal
       isOpen={isOpen}
@@ -88,73 +80,83 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
           className="w-full mt-3 flex flex-col justify-start items-start "
         >
           {/* Image Upload */}
-          <div className="flex flex-col gap-1">
-            <label
-              htmlFor="pic"
-              className="text-white flex items-center gap-3 text-sm font-medium"
-            >
-              <img
-                src={imagePreview}
-                className="w-20 h-20 cursor-pointer rounded-full"
-                alt="uploadIcon"
-              />
-              <p>Add Category Icon</p>
-            </label>
-            <input
-              type="file"
-              id="pic"
-              name="pic"
-              onChange={handleFileChange}
-              onBlur={handleBlur}
-              className="hidden"
-            />
-            {errors.pic && touched.pic && (
-              <p className="text-red-700 text-sm font-medium">{errors.pic}</p>
-            )}
-          </div>
+      
+       <div className="w-full mt-4 h-auto flex flex-col justify-start items-start gap-1">
+  <label
+    htmlFor="Categoryid"
+    className="text-white font-medium text-sm leading-[21px]"
+  >
+    Select Category
+  </label>
+  <select
+    id="Categoryid"
+    name="Categoryid"
+    value={values.Categoryid} // formik state
+    onChange={handleChange}
+    onBlur={handleBlur}
+    className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
+      errors.Categoryid && touched.Categoryid
+        ? "border-red-500"
+        : "border-[#F4F4F4]"
+    }`}
+  >
+    <option className="bg-back" value="">Select Category</option>
+    {data?.map((cat) => (
+
+      <option className="bg-black" key={cat._id} value={cat.categoryID}>
+        {cat.name}
+      </option>
+    ))}
+  </select>
+
+  {errors.Categoryid && touched.Categoryid && (
+    <p className="text-red-700 text-sm font-medium">{errors.Categoryid}</p>
+  )}
+</div>
+
           <div className="w-full mt-4 h-auto flex flex-col justify-start items-start gap-1">
             <label
-              htmlFor=""
+              htmlFor="subcategoryName"
               className="text-white font-medium  text-sm leading-[21px]"
             >
-              Category name
+              Sub Category
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
+              id="subcategoryname"
+              name="subcategoryname" // ✅ Don't use "subCategory" here
+              value={values.subcategoryname}
+                onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none  rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
-                errors?.name && touched?.name
+              className={`w-full h-[49px] border-[0.8px] bg-transparent outline-none rounded-[14px] placeholder:text-[#FFFFFF] text-white px-3 text-[16px] font-normal leading-[20.4px] ${
+                errors?.subcategoryname && touched?.subcategoryname
                   ? "border-red-500"
-                  : "border-[#F4F4F4] "
+                  : "border-[#F4F4F4]"
               }`}
-              placeholder="Enter Category name"
+              placeholder="Enter Subcategory"
             />
-            {errors.name && touched.name ? (
-              <p className="text-red-700 text-sm font-medium">{errors.name}</p>
+
+            {errors.subcategoryname && touched.subcategoryname ? (
+              <p className="text-red-700 text-sm font-medium">
+                {errors.subcategoryname}
+              </p>
             ) : null}
           </div>
-        
           <div className="w-full mt-4 h-auto flex  justify-start items-start gap-1">
-         
+           
 
             <button
               type="submit"
               className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
             >
-              {loading ? "Loading..." : "Save"}
+              {loading ? "Loading..." : "Add"}
             </button>
           </div>
         </form>
-        <div className="inline-flex flex-col mt-3 w-full sm:w-auto flex-nowrap items-center   rounded-full p-1.5">
-         
-        </div>
+      
       </div>
     </Modal>
   );
 };
 
-export default CreateCategory;
+export default CreateSubCategory;

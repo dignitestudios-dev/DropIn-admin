@@ -7,8 +7,10 @@ import MoveSubCategory from "../../../components/app/category/MoveSubCategory";
 import SuccessCategory from "../../../components/app/category/SuccessCategory";
 import axios from "../../../axios";
 import Pagination from "../../../components/global/Pagination";
+import CreateSubCategory from "../../../components/app/category/CreateSubCategory";
 export default function Category() {
   const [isCategory, setIsCategory] = useState(false);
+  const [isSubCategory, setIsSubCategory] = useState(false);
   const [isEditCategory, setIsEditCategory] = useState(false);
   const [isDelCategory, setIsDelCategory] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,18 +37,29 @@ export default function Category() {
   useEffect(() => {
     getCategoryData();
   }, [pageNo, update]);
+
+  console.log(categoryData, "categoryData");
   return (
     <div>
       <div className="flex justify-between items-center">
         <h3 className="font-[500] text-[20px] sm:text-[28px] text-white">
           Category
         </h3>
-        <button
+        <div className="flex gap-3" >
+  <button
           onClick={() => setIsCategory(!isCategory)}
           className="w-[80px] sm:w-[180px] h-[40px] sm:h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
         >
           Add Category{" "}
         </button>
+        <button
+          onClick={() => setIsSubCategory(!isSubCategory)}
+          className="w-[80px] sm:w-[180px] h-[40px] sm:h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
+        >
+          Add SubCategory{" "}
+        </button>
+        </div>
+      
       </div>
       <div className=" p-4 mt-5 h-[63vh] overflow-auto table-scroller flex flex-col gap-8 ">
         {categoryData.map((item, index) => {
@@ -71,6 +84,12 @@ export default function Category() {
         setIsOpen={setIsCategory}
         isOpen={isCategory}
         getCategoryData={getCategoryData}
+      />
+       <CreateSubCategory
+        setIsOpen={setIsSubCategory}
+        isOpen={isSubCategory}
+        getCategoryData={getCategoryData}
+        data={categoryData}
       />
       <EditCategory
         setIsOpen={setIsEditCategory}

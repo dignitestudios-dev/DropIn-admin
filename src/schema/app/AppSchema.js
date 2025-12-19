@@ -15,11 +15,12 @@ export const categorySchema = Yup.object({
       const maxSize = 5 * 1024 * 1024;
       return value && value.size <= maxSize;
     }),
-    subCategory: Yup.array()
-    .of(Yup.string().required("Subcategory cannot be empty"))
-    .min(1, "At least one subcategory is required"),
-  
 });
 export const editCategorySchema = Yup.object({
   newName: Yup.string().required("Category Name is required"),
+});
+
+export const subCategorySchema = Yup.object({
+  subcategoryname: Yup.string().required("SubCategory Name is required"),
+  Categoryid: Yup.string().required("SubCategory Name is required"),
 });

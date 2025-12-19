@@ -1,14 +1,17 @@
 export const notificationValues = {
-    title: "",
-    detail: "",
-  };
-  
-export const categoryValues = {
-    name: "",
-    pic: "",
-    subCategory: [],
-  };
+  title: "",
+  detail: "",
+};
 
-  export const editCategoryValues = {
-    newName: "",
-  };
+export const categoryValues = {
+  name: "",
+  pic: "",
+};
+
+export const editCategoryValues = {
+  newName: "",
+};
+export const subCategoryValues = {
+  Categoryid: "",
+  subcategoryname: "",
+};
