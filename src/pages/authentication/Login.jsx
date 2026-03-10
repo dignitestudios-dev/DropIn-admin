@@ -12,10 +12,10 @@ import axios from "../../axios";
 import { AppContext } from "../../context/AppContext";
 import { ErrorToast } from "../../components/global/Toaster";
 const Login = () => {
-  const {handleLogin} = useContext(AppContext)
+  const { handleLogin } = useContext(AppContext);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const navigate=useNavigate("")
-  const [loading,setloading]=useState(false)
+  const navigate = useNavigate("");
+  const [loading, setloading] = useState(false);
   // const { loading, postData } = useLogin();
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
@@ -26,21 +26,20 @@ const Login = () => {
       validateOnBlur: true,
       onSubmit: async (values, action) => {
         try {
-          setloading(true)
+          setloading(true);
           const response = await axios.post("auth/login", {
             email: values.email,
             password: values.password,
           });
-          
+
           if (response?.status === 200) {
-            handleLogin(response?.data?.data)
-            
+            handleLogin(response?.data?.data);
+
             navigate("/dashboard");
-           
           }
         } catch (err) {
           ErrorToast(
-            err.response?.data?.message || "Login failed. Please try again."
+            err.response?.data?.message || "Login failed. Please try again.",
           );
         } finally {
           setloading(false);
@@ -55,7 +54,11 @@ const Login = () => {
     });
   return (
     <div className="mt-10">
-      <img src={Logo} alt="orange_logo" className="w-[128px] mx-auto mb-4 relative z-10" />
+      <img
+        src={Logo}
+        alt="orange_logo"
+        className="w-[128px] mx-auto mb-4 relative z-10"
+      />
       <div className="w-full h-auto relative z-10 backdrop-blur-[50px] flex flex-col items-center p-6 justify-center  md:h-[400px] bg-[#13131399] rounded-[19px]">
         <div className="w-auto flex flex-col justify-center items-center">
           <h2 className="text-[24px] font-bold leading-[36px] text-white">
@@ -125,7 +128,7 @@ const Login = () => {
                 onClick={() => setIsPasswordVisible((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                {!isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
             {errors.password && touched.password ? (
@@ -135,21 +138,7 @@ const Login = () => {
             ) : null}
           </div>
 
-          <div className="w-full -mt-1  flex items-center justify-between">
-            <div className="flex">
-              <input
-                type="checkbox"
-                className="border-gray-200 rounded-[8px] w-[20px] h-[20px]"
-                id="remember-me"
-              />
-              <label
-                htmlFor="remember-me"
-                className="text-sm text-white font-normal ms-3"
-              >
-                Remember me
-              </label>
-            </div>
-
+          <div className="w-full -mt-1 flex items-center justify-end">
             <NavLink
               to={"/auth/forgotpassword"}
               className="text-[#2F7EF7] text-[16px] font-medium leading-[21px]"

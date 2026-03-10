@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router";
-import { view, EventList as EventImage } from "../../../assets/export";
+import {
+  view,
+  EventList as EventImage,
+  defaultImage,
+} from "../../../assets/export";
 import Pagination from "../../global/Pagination";
 import { dateFormate } from "../../../lib/helpers";
 import { CiLight } from "react-icons/ci";
 
-export default function EventList({eventList,pagnition,setPageNo}) {
+export default function EventList({ eventList, pagnition, setPageNo }) {
   const navigate = useNavigate("");
-console.log(eventList,"eventList")
+  console.log(eventList, "eventList");
   return (
     <div>
       <div className="h-[67vh] table-scroller bg-[#13131399] mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 py-2 sm:py-0 sm:px-5 mb-6">
@@ -36,13 +40,13 @@ console.log(eventList,"eventList")
         </div>
 
         {/* Event Rows */}
-        {eventList?.map((event,index) => (
+        {eventList?.map((event, index) => (
           <div key={index}>
             {/* Mobile View */}
             <div className="md:hidden bg-black bg-opacity-40 rounded-[15px] p-4 mb-4 text-white">
               <div className="flex items-center gap-4 mb-4">
                 <img
-                  src={event.coverPhoto}
+                  src={event.coverPhoto ? event.coverPhoto : defaultImage}
                   alt="Event"
                   className="w-12 h-12 rounded-full object-cover"
                 />
@@ -69,14 +73,16 @@ console.log(eventList,"eventList")
                 </div>
                 <div className="flex items-center text-[12px]">
                   <span className="w-24 opacity-70">Status:</span>
-                  <span className="bg-[#F2C861] text-black px-3 py-1 rounded-[6px]">
+                  <span className="bg-[#F2C861] capitalize text-black px-3 py-1 rounded-[6px]">
                     {event.status}
                   </span>
                 </div>
               </div>
 
               <button
-                onClick={() => navigate(`/events/${event._id}`,{state:{event}})}
+                onClick={() =>
+                  navigate(`/events/${event._id}`, { state: { event } })
+                }
                 className="bg-[#2F7EF7] w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
               >
                 <img src={view} alt="" className="w-4 h-4" />
@@ -88,7 +94,7 @@ console.log(eventList,"eventList")
             <div className="hidden md:grid grid-cols-12 text-white text-[14px] font-extralight border-b border-[#313131] transition duration-300  py-4 mb-4">
               <div className="col-span-2 flex items-center gap-3">
                 <img
-                  src={event.coverPhoto}
+                  src={event.coverPhoto ? event.coverPhoto : defaultImage}
                   alt="Event"
                   className="w-10 h-10 rounded-full object-cover"
                 />
@@ -118,14 +124,16 @@ console.log(eventList,"eventList")
               </div>
 
               <div className="col-span-1 flex items-center">
-                <span className="bg-[#F2C861] text-black text-[10px] px-1 py-1 rounded-[6px]">
+                <span className="bg-[#F2C861] capitalize text-black text-[10px] px-1 py-1 rounded-[6px]">
                   {event.status}
                 </span>
               </div>
 
               <div className="col-span-1 flex justify-start items-center">
                 <button
-                  onClick={() => navigate(`/events/${event._id}`,{state:{event}})}
+                  onClick={() =>
+                    navigate(`/events/${event._id}`, { state: { event } })
+                  }
                   className="bg-[#2F7EF7] flex items-center justify-center px-1 py-1 rounded-[8px]  hover:bg-[#2F7EF7]/90 transition-colors"
                 >
                   <img src={view} alt="" className="w-4 h-4" />
@@ -137,7 +145,7 @@ console.log(eventList,"eventList")
         ))}
       </div>
       <div className="flex justify-end">
-        <Pagination pagnition={pagnition} setPageNo={setPageNo}/>
+        <Pagination pagnition={pagnition} setPageNo={setPageNo} />
       </div>
     </div>
   );

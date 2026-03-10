@@ -168,7 +168,7 @@ export default function InAppChangedPassword() {
                 onClick={() => setIsReEnterPassword((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {isReEnterPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                {!isReEnterPassword ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
             {errors.reEnterPassword && touched.reEnterPassword ? (

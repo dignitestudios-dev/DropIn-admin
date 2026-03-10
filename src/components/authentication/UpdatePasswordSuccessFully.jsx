@@ -11,7 +11,7 @@ const UpdatePasswordSuccessfully = () => {
     if (updatePasswordSuccessfully) {
       const timer = setTimeout(() => {
         setUpdatePasswordSuccessfully(false);
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }

@@ -17,48 +17,48 @@ ChartJS.register(
   BarElement,
   Tooltip,
   Legend,
-  Title
+  Title,
 );
 
-const HorizontalBarChart = ({eGraphData}) => {
+const HorizontalBarChart = ({ eGraphData }) => {
   const labels = ["Live Events", "Featured Events", "Private Events"];
-console.log(eGraphData,"eGraphData")
-const data = {
-  labels: ["Events"], 
-   // only one group on Y-axis
-  datasets: [
-    {
-      label: "Live Events",
-      data: [eGraphData?.liveCount || 0],
-      backgroundColor: "#2F7EF7",
-      barThickness: 50,
-    },
-    {
-      label: "Featured Events",
-      data: [eGraphData?.featuredCount || 0],
-      backgroundColor: "#85F4FA",
-      barThickness: 50,
-    },
-    {
-      label: "Private Events",
-      data: [eGraphData?.privateCount || 0],
-      backgroundColor: "#858FFA",
-      barThickness: 50,
-    },
-  ],
-};
+  console.log(eGraphData, "eGraphData");
+  const data = {
+    labels: ["Events"],
+    // only one group on Y-axis
+    datasets: [
+      {
+        label: "Live Events",
+        data: [eGraphData?.liveCount || 0],
+        backgroundColor: "#2F7EF7",
+        barThickness: 50,
+      },
+      {
+        label: "Featured Events",
+        data: [eGraphData?.featuredCount || 0],
+        backgroundColor: "#85F4FA",
+        barThickness: 50,
+      },
+      {
+        label: "Private Events",
+        data: [eGraphData?.privateCount || 0],
+        backgroundColor: "#858FFA",
+        barThickness: 50,
+      },
+    ],
+  };
 
   const options = {
     indexAxis: "y", // Horizontal bars
     responsive: true,
-      maintainAspectRatio: false,
-      
+    maintainAspectRatio: false,
+
     plugins: {
       legend: {
         position: "top",
-          align: "center",
+        align: "center",
         labels: {
-          usePointStyle: true ,
+          usePointStyle: true,
         },
       },
     },
@@ -84,17 +84,18 @@ const data = {
     <div className="bg-[#13131399] mt-3 backdrop-blur-[50px] p-5 h-[350px] relative w-full rounded-[15px] ">
       <h3 className="font-[500] text-[15px] text-white absolute top-6 ">
         Events
+        <div
+          name=""
+          id=""
+          className="bg-transparent  text-[#8A92A6] outline-none  text-[12px] font-[400]"
+        >
+          This Week
+        </div>
       </h3>
       {/* <button className="flex items-center  bg-transparent absolute top-6 right-2 text-[#8A92A6] text-[12px] font-[400] ">
       This Week <MdKeyboardArrowDown size={23} color="white" />{" "}
       </button> */}
-      <div
-        name=""
-        id=""
-        className="bg-transparent  text-[#8A92A6] outline-none absolute top-12 right-2 text-[12px] font-[400]"
-      >
-        This Week
-      </div>
+
       <Bar
         data={data}
         options={options}

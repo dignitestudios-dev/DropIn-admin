@@ -19,7 +19,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
 );
 
 export const options = {
@@ -45,15 +45,27 @@ export const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const generateRandomData = (min, max, length) => {
   return Array.from(
     { length },
-    () => Math.floor(Math.random() * (max - min + 1)) + min
+    () => Math.floor(Math.random() * (max - min + 1)) + min,
   );
 };
-
 
 const createGradient = (ctx, color1, color2) => {
   const gradient = ctx.createLinearGradient(0, 0, 0, 700);
@@ -62,38 +74,38 @@ const createGradient = (ctx, color1, color2) => {
   return gradient;
 };
 
-export function LineGraph({dGraphData,year,setYear}) {
- const data = {
-  labels,
-  datasets: [
-    {
-      label: "Selected Year",
-      backgroundColor: (context) =>
-        createGradient(
-          context.chart.ctx,
-          "rgba(47, 126, 247, 0.4)",
-          "rgba(47, 126, 247, 0)"
-        ),
-      data: dGraphData?.usersThisYear || [],
-      borderColor: "rgb(53, 162, 235)",
-      tension: 0.4,
-      fill: true,
-    },
-    {
-      label: "Previous Year",
-      data: dGraphData?.usersPreviousYear || [],
-      backgroundColor: (context) =>
-        createGradient(
-          context.chart.ctx,
-          "rgba(133, 197, 250, 0.2)",
-          "rgba(133, 217, 250, 0)"
-        ),
-      borderColor: "rgb(53, 162, 235)",
-      tension: 0.4,
-      fill: true,
-    },
-  ],
-};
+export function LineGraph({ dGraphData, year, setYear }) {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Selected Year",
+        backgroundColor: (context) =>
+          createGradient(
+            context.chart.ctx,
+            "rgba(47, 126, 247, 0.4)",
+            "rgba(47, 126, 247, 0)",
+          ),
+        data: dGraphData?.usersThisYear || [],
+        borderColor: "rgb(53, 162, 235)",
+        tension: 0.4,
+        fill: true,
+      },
+      {
+        label: "Previous Year",
+        data: dGraphData?.usersPreviousYear || [],
+        backgroundColor: (context) =>
+          createGradient(
+            context.chart.ctx,
+            "rgba(133, 197, 250, 0.2)",
+            "rgba(133, 217, 250, 0)",
+          ),
+        borderColor: "rgb(53, 162, 235)",
+        tension: 0.4,
+        fill: true,
+      },
+    ],
+  };
 
   return (
     <div className="bg-[#13131399] mt-3 backdrop-blur-[50px] pt-0 p-5 h-[350px] relative rounded-[15px] ">
@@ -103,9 +115,13 @@ export function LineGraph({dGraphData,year,setYear}) {
       {/* <button className="flex items-center  bg-transparent absolute top-12 right-2 text-[#8A92A6] text-[12px] font-[400] ">
         2024 <MdKeyboardArrowDown size={23} color="white" />{" "}
       </button> */}
-      <select name="" id="" className="bg-transparent cursor-pointer text-[#8A92A6] outline-none absolute top-12 right-2 text-[12px] font-[400]">
+      {/* <select
+        name=""
+        id=""
+        className="bg-transparent cursor-pointer text-[#8A92A6] outline-none absolute top-12 right-2 text-[12px] font-[400]"
+      >
         <option value=""></option>
-      </select>
+      </select> */}
       <Line
         options={options}
         data={data}

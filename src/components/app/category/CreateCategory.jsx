@@ -12,7 +12,6 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
   const [loading, setLoading] = useState(false);
   const [subCategoryInput, setSubCategoryInput] = useState(""); // 🔁 this is new
 
- 
   const {
     values,
     handleBlur,
@@ -31,7 +30,6 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
       data.append("categoryName", values.name);
       data.append("icon", values.pic);
 
- 
       try {
         setLoading(true);
         const response = await axios.post(`/category/create-category`, data, {
@@ -40,8 +38,8 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
 
         if (response.status === 200) {
           action.resetForm();
-         
-          setImagePreview(uploadIcon); 
+
+          setImagePreview(uploadIcon);
           setIsOpen(false);
           SuccessToast("Category created successfully");
           getCategoryData();
@@ -57,7 +55,21 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
+      if (!validTypes.includes(file.type)) {
+        alert("Only PNG and JPG images are allowed.");
+        return;
+      }
+
+      if (file.size > maxSize) {
+        alert("File size must be less than 5MB.");
+        return;
+      }
+
       setFieldValue("pic", file);
+
       const reader = new FileReader();
       reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
@@ -137,10 +149,8 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
               <p className="text-red-700 text-sm font-medium">{errors.name}</p>
             ) : null}
           </div>
-        
-          <div className="w-full mt-4 h-auto flex  justify-start items-start gap-1">
-         
 
+          <div className="w-full mt-4 h-auto flex  justify-start items-start gap-1">
             <button
               type="submit"
               className="w-full h-[49px] mt-4 rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
@@ -149,9 +159,7 @@ const CreateCategory = ({ isOpen, setIsOpen, getCategoryData }) => {
             </button>
           </div>
         </form>
-        <div className="inline-flex flex-col mt-3 w-full sm:w-auto flex-nowrap items-center   rounded-full p-1.5">
-         
-        </div>
+        <div className="inline-flex flex-col mt-3 w-full sm:w-auto flex-nowrap items-center   rounded-full p-1.5"></div>
       </div>
     </Modal>
   );

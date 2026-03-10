@@ -18,9 +18,10 @@ export default function EventFilter({  type, setType, status, setStatus  }) {
         onChange={(e) => setStatus(e.target.value)}
         className="bg-[#FBFBFB1A] event-select w-full sm:w-[130px] py-1 px-2 focus:outline-none border border-[#F4F4F480] text-white h-[32px] text-[10px] font-[400] rounded-[10px]"
       >
-        <option className="text-black" value="featured">Featured</option>
+        <option className="text-black" value="live">Live</option>
         <option className="text-black" value="upcoming">Upcoming</option>
         <option className="text-black" value="ended">Ended</option>
+        <option className="text-black" value="canceled">Canceled</option>
       </select>
 
       {/* City Filter */}

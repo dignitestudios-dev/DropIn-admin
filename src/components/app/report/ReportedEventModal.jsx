@@ -1,11 +1,15 @@
 import Modal from "react-modal";
 import { IoMdClose } from "react-icons/io";
-import { EventList, person, person2 } from "../../../assets/export";
+import {
+  defaultImage,
+  EventList,
+  person,
+  person2,
+} from "../../../assets/export";
 import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import { dateFormate } from "../../../lib/helpers";
 const ReportedEventModal = ({ isOpen, setIsOpen, eventDetail }) => {
-  console.log(eventDetail);
   const navigate = useNavigate("");
   return (
     <Modal
@@ -28,7 +32,11 @@ const ReportedEventModal = ({ isOpen, setIsOpen, eventDetail }) => {
           <div className="flex justify-between gap-8 items-center">
             <div className="flex items-center w-full border-r border-[#313131] gap-3 mt-2 text-white">
               <img
-                src={eventDetail?.event?.coverPhoto}
+                src={
+                  eventDetail?.event?.coverPhoto
+                    ? eventDetail?.event?.coverPhoto
+                    : defaultImage
+                }
                 alt="Profile"
                 className="w-10 h-10 rounded-full"
               />
@@ -36,27 +44,31 @@ const ReportedEventModal = ({ isOpen, setIsOpen, eventDetail }) => {
                 <span className="text-nowrap font-medium text-[16px]">
                   {eventDetail?.event?.title}
                 </span>
-                <p className="text-[16px] text-[#959393] font-[400]">{eventDetail?.type}</p>
+                <p className="text-[16px] text-[#959393] font-[400]">
+                  {eventDetail?.type}
+                </p>
               </div>
             </div>
             <div className="w-full ">
-              <p className="text-[16px] text-[#959393] font-[400]">Reported User</p>
+              <p className="text-[16px] text-[#959393] font-[400]">
+                Reported User
+              </p>
               <div className="flex items-center w-full  gap-3 mt-2 text-white">
-              <img
-                src={eventDetail?.reportedUser?.profilePicture}
-                alt="Profile"
-                className="w-10 h-10 rounded-full"
-              />
-              <div>
-                <span className="text-nowrap font-medium text-[16px]">
-                  {eventDetail?.reportedUser?.firstName}
-                </span>
-              </div>
+                <img
+                  src={eventDetail?.reportedUser?.profilePicture}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full"
+                />
+                <div>
+                  <span className="text-nowrap font-medium text-[16px]">
+                    {eventDetail?.reportedUser?.firstName}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-         <div className="p-2 border-b border-[#313131] pb-5">
+        <div className="p-2 border-b border-[#313131] pb-5">
           <p className="text-[16px] text-[#959393] font-[400]">Report By</p>
           <div className="flex justify-between gap-8 items-center">
             <div className="flex items-center w-full border-r border-[#313131] gap-3 mt-2 text-white">

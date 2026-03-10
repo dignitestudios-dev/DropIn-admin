@@ -6,20 +6,17 @@ import ReportedGroup from "../../../components/app/report/ReportedGroup";
 import axios from "../../../axios";
 import ReportedListSkeleton from "../../../components/app/report/ReportedListSkeleton";
 
-
 export default function Report() {
   const [loading, setLoading] = useState(false);
   const [reportList, setReportList] = useState([]);
   const [activeTab, setActiveTab] = useState("user");
-  const [pageNo,setPageNo]=useState(1)
+  const [pageNo, setPageNo] = useState(1);
   const [pagination, setPagination] = useState({});
-
-  console.log(pageNo,"response")
   const getReportedUsers = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `/report/get-reports?type=${activeTab}&page=${pageNo}&limit=10`
+        `/report/get-reports?type=${activeTab}&page=${pageNo}&limit=10`,
       );
       setReportList(response?.data?.data?.reports);
       setPagination(response?.data?.pagination);
@@ -32,8 +29,7 @@ export default function Report() {
 
   useEffect(() => {
     getReportedUsers();
-  }, [activeTab, pageNo]); // 🔁 Fetch again when tab changes
-console.log(pagination,"pagination")
+  }, [activeTab, pageNo]);
   const tabList = ["user", "event", "chat", "group"];
   const tabLabels = {
     user: "User",
@@ -43,10 +39,34 @@ console.log(pagination,"pagination")
   };
 
   const tabComponents = {
-    user: <ReportedUsers reportList={reportList} pagination={pagination} setPageNo={setPageNo} />,
-    event: <ReportedEvents reportList={reportList} pagination={pagination} setPageNo={setPageNo} />,
-    chat: <ReportedChat reportList={reportList} pagination={pagination} setPageNo={setPageNo} />,
-    group: <ReportedGroup reportList={reportList} pagination={pagination} setPageNo={setPageNo} />,
+    user: (
+      <ReportedUsers
+        reportList={reportList}
+        pagination={pagination}
+        setPageNo={setPageNo}
+      />
+    ),
+    event: (
+      <ReportedEvents
+        reportList={reportList}
+        pagination={pagination}
+        setPageNo={setPageNo}
+      />
+    ),
+    chat: (
+      <ReportedChat
+        reportList={reportList}
+        pagination={pagination}
+        setPageNo={setPageNo}
+      />
+    ),
+    group: (
+      <ReportedGroup
+        reportList={reportList}
+        pagination={pagination}
+        setPageNo={setPageNo}
+      />
+    ),
     // providers: <ReportedProviders reportList={reportList} />,
     // services: <ReportedServices reportList={reportList} />,
   };
@@ -62,7 +82,10 @@ console.log(pagination,"pagination")
               className={`bg-transparent ${
                 activeTab === tab && "border-b-2 border-[#2F7EF7]"
               } text-white text-[14px] font-[400]`}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                setPageNo(1);
+                setActiveTab(tab);
+              }}
             >
               {tabLabels[tab]}
             </button>
@@ -72,13 +95,13 @@ console.log(pagination,"pagination")
 
       <div className="mt-4">
         {loading ? (
-          <ReportedListSkeleton/>
+          <ReportedListSkeleton />
+        ) : reportList?.length > 0 ? (
+          tabComponents[activeTab]
         ) : (
-          reportList?.length > 0 ? (
-            tabComponents[activeTab]
-          ) : (
-            <p className="text-white text-[24px] font-[400] flex items-center justify-center h-[200px]">No reports found</p>
-          )
+          <p className="text-white text-[24px] font-[400] flex items-center justify-center h-[200px]">
+            No reports found
+          </p>
         )}
       </div>
     </div>

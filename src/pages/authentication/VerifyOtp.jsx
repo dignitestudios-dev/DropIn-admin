@@ -15,26 +15,25 @@ export default function VerifyOtp() {
   const [seconds, setSeconds] = useState(30);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const email=sessionStorage.getItem("email");
+  const email = sessionStorage.getItem("email");
 
   // const handleRestart = () => {
   //   setSeconds(30);
   //   setIsActive(true);
   // };
 
-
   const verifyOtp = async () => {
     if (loading) return;
 
-    const otpString = otp.join('');
+    const otpString = otp.join("");
     if (otpString.length !== 5) {
-      ErrorToast('Please enter a 5-digit OTP');
+      ErrorToast("Please enter a 5-digit OTP");
       return;
     }
 
     try {
       setLoading(true);
-      const response = await axios.post('/auth/verify-reset-otp',{
+      const response = await axios.post("/auth/verify-reset-otp", {
         email: email,
         otp: otpString,
       });
@@ -42,21 +41,18 @@ export default function VerifyOtp() {
       if (response.data.success) {
         console.log(response?.data.data.token);
         Cookies.set("token", response?.data?.data?.token);
-        SuccessToast('OTP verified successfully');
-        navigate('/auth/changePassword');
+        SuccessToast("OTP verified successfully");
+        navigate("/auth/changePassword");
       } else {
-        ErrorToast('Invalid OTP. Please try again');
+        ErrorToast("Invalid OTP. Please try again");
       }
     } catch (error) {
-      ErrorToast(error.response?.data?.message || 'Failed to verify OTP');
+      ErrorToast(error.response?.data?.message || "Failed to verify OTP");
     } finally {
       setLoading(false);
     }
-    setOtp(Array(5).fill(''));
+    setOtp(Array(5).fill(""));
   };
-
-
-
 
   const handleChange = (e, index) => {
     const { value } = e.target;
@@ -94,28 +90,23 @@ export default function VerifyOtp() {
     try {
       // Send email for password reset
       const response = await axios.post(
-        "/auth/verify-reset-otp",
-       
+        "/auth/send-reset-otp",
+
         {
-          email:email,
-        }
+          email: email,
+        },
       );
-     
+
       if (response?.status === 200) {
-        
-        
         SuccessToast(response?.data?.message);
         setSeconds(30);
         setIsActive(true);
-       setOtp(Array(5).fill(''));
+        setOtp(Array(5).fill(""));
       }
       // Navigate to OTP verificatio
     } catch (error) {
-      ErrorToast(
-        error.response?.data?.message || "Failed to send reset email"
-      );
+      ErrorToast(error.response?.data?.message || "Failed to send reset email");
     }
-   
   };
   return (
     <div className="mt-10">
@@ -126,7 +117,7 @@ export default function VerifyOtp() {
       />
       <div className="w-full h-auto relative z-10 backdrop-blur-[50px] flex flex-col  p-6 justify-center  bg-[#13131399] rounded-[19px]">
         <div className="w-auto flex  items-center">
-          <NavLink to={"/auth/forgotpassword"} >
+          <NavLink to={"/auth/forgotpassword"}>
             <FaArrowLeftLong size={24} className="text-white" />
           </NavLink>
 
@@ -135,14 +126,16 @@ export default function VerifyOtp() {
           </h2>
         </div>
         <p className="font-normal text-[13px] leading-[19px] text-[#FFFFFF] mt-3 text-center">
-          Enter the OTP sent to loremipsum@outlook.com <br />
+          Enter the OTP sent to {email} <br />
         </p>
 
-        <form onSubmit={(e)=>{
-          e.preventDefault();
-          verifyOtp();
-         
-        }} className="w-full md:w-[393px] mt-5 flex flex-col justify-center items-center gap-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            verifyOtp();
+          }}
+          className="w-full md:w-[393px] mt-5 flex flex-col justify-center items-center gap-4"
+        >
           <div className="w-full h-auto flex justify-center items-center gap-4">
             {otp.map((_, index) => {
               return (
@@ -170,20 +163,23 @@ export default function VerifyOtp() {
                 setSeconds={setSeconds}
               />
             ) : (
-              <button
-                type="button"
+              <span
                 onClick={handleRestart}
-                className="outline-none text-[13px] border-none text-[#199BD1] font-bold"
+                className="cursor-pointer outline-none text-[13px] border-none text-[#199BD1] font-bold"
               >
                 Resend Otp
-              </button>
+              </span>
             )}
           </p>
           <button
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Submit</span>}
+            {loading ? (
+              <FiLoader size={20} className="animate-spin" />
+            ) : (
+              <span>Submit</span>
+            )}
           </button>
         </form>
       </div>

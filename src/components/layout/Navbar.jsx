@@ -1,17 +1,30 @@
 import { beardGuy, chat, notificationDrodown } from "../../assets/export";
 import { IoMdArrowDropdown } from "react-icons/io";
 import NotificationDropdown from "../global/NotificationDropdown";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ProfileDropdown from "../global/ProfileDropdown";
 import { useNavigate } from "react-router";
 import { AppContext } from "../../context/AppContext";
 
 const Navbar = () => {
-  const {user} = useContext(AppContext)
+  const { user } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const navigate = useNavigate("");
-  console.log(user,"user222222")
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setisProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div className="w-full h-full">
       <div className="w-full h-full  px-4 flex justify-between items-center">
@@ -72,7 +85,10 @@ const Navbar = () => {
       </div>
 
       {isProfileOpen && (
-        <div className="fixed right-10 shadow-lg overflow-auto   p-5 top-30 bg-[#0E0E0E]  w-[200px] rounded-[15px] ">
+        <div
+          ref={dropdownRef}
+          className="absolute right-0 shadow-lg p-5 top-16 bg-[#0E0E0E] w-[200px] rounded-[15px]"
+        >
           <ProfileDropdown />
         </div>
       )}

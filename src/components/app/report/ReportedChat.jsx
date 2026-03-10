@@ -5,11 +5,14 @@ import ReportedUserModal from "./ReportedUserModal";
 import { dateFormate } from "../../../lib/helpers";
 import ReportedEventModal from "./ReportedEventModal";
 import ReportedChatModal from "./ReportedChatModal";
+import ChatHistoryModal from "./ChatHistoryModal";
+import { BsChatLeftText } from "react-icons/bs";
 
-export default function ReportedChat({reportList,pagination,setPageNo}) {
+export default function ReportedChat({ reportList, pagination, setPageNo }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [chatDetail,setChatDetail] = useState()
-  console.log(reportList,"reportChatList")
+  const [isChatHistory, setChatHistory] = useState(false);
+  const [chatDetail, setChatDetail] = useState();
+
   return (
     <div>
       <div className="bg-[#13131399] h-[67vh] table-scroller mt-3 rounded-[25px] overflow-x-auto whitespace-nowrap px-2 sm:px-5 mb-6">
@@ -33,7 +36,7 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
         </div>
 
         {/* Report Rows */}
-        {reportList?.map((item,index) => (
+        {reportList?.map((item, index) => (
           <div key={index}>
             {/* Mobile View */}
             <div className="md:hidden bg-black bg-opacity-40 rounded-[15px] p-4 mb-4 text-white">
@@ -44,7 +47,9 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-medium text-[14px]">{item?.reporter?.firstName}</p>
+                  <p className="font-medium text-[14px]">
+                    {item?.reporter?.firstName}
+                  </p>
                   <p className="text-[12px] text-white/70">Reported User</p>
                 </div>
               </div>
@@ -52,9 +57,7 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
               <div className="space-y-3 mb-4">
                 <div className="text-[12px]">
                   <p className="text-white/70 mb-1">Reason:</p>
-                  <p className="leading-relaxed text-wrap">
-                   {item?.reason}
-                  </p>
+                  <p className="leading-relaxed text-wrap">{item?.reason}</p>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -65,7 +68,9 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
                       alt="Reported User"
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-[12px]">{item?.reportedUser?.firstName}</span>
+                    <span className="text-[12px]">
+                      {item?.reportedUser?.firstName}
+                    </span>
                   </div>
                 </div>
 
@@ -74,14 +79,22 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
                   <span>{dateFormate(item?.createdAt)}</span>
                 </div>
               </div>
-
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="bg-[#2F7EF7] w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
-              >
-                <img src={view} alt="" className="w-4 h-4" />
-                <span className="text-[12px]">View Details</span>
-              </button>
+              <div className="flex items-center text-[12px]">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="bg-[#2F7EF7] w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
+                >
+                  <img src={view} alt="" className="w-4 h-4" />
+                  <span className="text-[12px]">View Details</span>
+                </button>
+                <button
+                  onClick={() => setChatHistory(!isChatHistory)}
+                  className="bg-[#2F7EF7] w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
+                >
+                  <BsChatLeftText />
+                  <span className="text-[12px]">View Chat </span>
+                </button>
+              </div>
             </div>
 
             {/* Desktop View */}
@@ -100,7 +113,7 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
 
               {/* Reason */}
               <div className="col-span-3 md:pl-6 lg:pl-20">
-                <p className="text-[10px] lg:text-[12px] leading-relaxed whitespace-normal pr-4">
+                <p className="text-[10px] text-wrap break-words lg:text-[12px] leading-relaxed whitespace-normal pr-4">
                   {item?.reason}
                 </p>
               </div>
@@ -118,16 +131,32 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
               </div>
 
               {/* Report Date */}
-              <div className="col-span-3 text-[12px]">{dateFormate(item?.createdAt)}</div>
+              <div className="col-span-3 text-[12px]">
+                {dateFormate(item?.createdAt)}
+              </div>
 
               {/* Action */}
               <div className="col-span-2 flex justify-start">
                 <button
-                  onClick={() => {setIsOpen(!isOpen) ; setChatDetail(item)}}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                    setChatDetail(item);
+                  }}
                   className="bg-[#2F7EF7] flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
                 >
                   <img src={view} alt="" className="w-4 h-4" />
                   <span className="text-[12px]">View</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setChatDetail(item);
+                    setChatHistory(!isChatHistory);
+                  }}
+                  className="bg-[#2F7EF7] ml-2 w-full flex items-center justify-center px-4 py-2 rounded-[8px] gap-2 hover:bg-[#2F7EF7]/90 transition-colors"
+                >
+                  <BsChatLeftText />
+                  <span className="text-[12px]">View Chat </span>
                 </button>
               </div>
             </div>
@@ -135,9 +164,18 @@ export default function ReportedChat({reportList,pagination,setPageNo}) {
         ))}
       </div>
       <div className="flex justify-end">
-        <Pagination pagnition={pagination} setPageNo={setPageNo}/>
+        <Pagination pagnition={pagination} setPageNo={setPageNo} />
       </div>
-      <ReportedChatModal setIsOpen={setIsOpen} isOpen={isOpen} chatDetail={chatDetail} />
+      <ReportedChatModal
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        chatDetail={chatDetail}
+      />
+      <ChatHistoryModal
+        chatDetail={chatDetail}
+        isOpen={isChatHistory}
+        setIsOpen={setChatHistory}
+      />
     </div>
   );
 }

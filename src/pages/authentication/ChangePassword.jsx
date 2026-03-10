@@ -12,10 +12,12 @@ import UpdatePasswordSuccessfully from "../../components/authentication/UpdatePa
 import { FiLoader } from "react-icons/fi";
 export default function ChangePassword() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  const navigate=useNavigate("");
-  const [loading,setloading]=useState(false)
-  const { updatePasswordSuccessfully, setUpdatePasswordSuccessfully } = useContext(AppContext);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
+  const navigate = useNavigate("");
+  const [loading, setloading] = useState(false);
+  const { updatePasswordSuccessfully, setUpdatePasswordSuccessfully } =
+    useContext(AppContext);
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: ChangedValues,
@@ -24,32 +26,31 @@ export default function ChangePassword() {
       validateOnBlur: true,
       onSubmit: async (values, action) => {
         try {
-          setloading(true)
-          
-      
+          setloading(true);
+
           const data = {
             newPassword: values.password,
           };
-      
+
           const response = await axios.post("auth/reset-password", data);
-      
+
           if (response.status === 200) {
-            setUpdatePasswordSuccessfully(true); 
-      
+            setUpdatePasswordSuccessfully(true);
+
             // ✅ Navigate after 3 seconds
             setTimeout(() => {
               setUpdatePasswordSuccessfully(false);
               navigate("/auth/login");
-            }, 5000);
+            }, 3000);
           } else {
             console.error("Password change failed:", response.message);
           }
         } catch (error) {
           console.error("Password change failed:", error);
         } finally {
-          setloading(false)
-        } 
-      }
+          setloading(false);
+        }
+      },
     });
   return (
     <div className="mt-10">
@@ -101,7 +102,7 @@ export default function ChangePassword() {
                 onClick={() => setIsPasswordVisible((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                {!isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
               </button>
             </div>
             {errors.password && touched.password ? (
@@ -115,7 +116,7 @@ export default function ChangePassword() {
               htmlFor=""
               className="text-white font-medium  text-sm leading-[21px]"
             >
-            Confirm Password
+              Confirm Password
             </label>
             <div
               className={`h-[49px] flex justify-start bg-transparent items-start w-full relative border-[0.8px] rounded-[14px] ${
@@ -152,11 +153,15 @@ export default function ChangePassword() {
             type="submit"
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Change Password</span>}
+            {loading ? (
+              <FiLoader size={20} className="animate-spin" />
+            ) : (
+              <span>Change Password</span>
+            )}
           </button>
         </form>
       </div>
-      <UpdatePasswordSuccessfully/>
+      <UpdatePasswordSuccessfully />
     </div>
   );
 }

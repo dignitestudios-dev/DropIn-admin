@@ -69,7 +69,12 @@ import volunteering from "./volunteering_events.png";
 import outdoor from "./outdoor_events.png";
 import social from "./social_events.png";
 import sports from "./sports_events.png";
+import defaultImage from "./download.png";
+
+
+
 export {
+  defaultImage,
   arts,
   educational,
   fitness,
