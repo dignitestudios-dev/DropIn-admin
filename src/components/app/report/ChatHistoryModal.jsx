@@ -255,10 +255,10 @@ export default function ChatHistoryModal({ isOpen, setIsOpen, chatDetail }) {
         {/* Report Banner */}
         {chatDetail?.reason && (
           <div className="mx-4 mt-3 px-4 py-2 rounded-[10px] bg-red-500/10 border border-red-500/20 flex items-start gap-2">
-            <span className="text-red-400 text-[11px] font-semibold uppercase tracking-wide mt-0.5">
+            <span className="text-red-400 text-[11px] font-semibold uppercase mt-0.5">
               Report Reason:
             </span>
-            <span className="text-red-300 text-[12px] leading-relaxed">
+            <span style={{letterSpacing:"2px"}} className="text-red-300 w-[80%]  break-words text-[12px] ">
               {chatDetail.reason}
             </span>
           </div>
