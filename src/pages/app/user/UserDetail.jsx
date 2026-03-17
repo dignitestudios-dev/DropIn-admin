@@ -137,7 +137,7 @@ export default function UserDetail() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12  gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden gap-3">
         <div className="lg:col-span-3 lg:row-span-3 bg-[#13131399] backdrop-blur-[50px] rounded-[15px] p-5 ">
           <h3 className="font-[500] text-[20px] text-white">About</h3>
           <span className="font-[300] text-[14px] text-[#A6A6A6]">Bio</span>
@@ -190,7 +190,7 @@ export default function UserDetail() {
             ))
           )}
         </div>
-        <div className="lg:col-span-6 lg:row-span-2 lg:col-start-4 lg:row-start-1">
+        <div className="lg:col-span-6 lg:row-span-6 lg:col-start-4 lg:row-start-1">
           <div className="flex items-center justify-between">
             <h3 className="font-[500] text-[20px] text-white">Events</h3>
             <ul className="flex items-center gap-3">
@@ -209,13 +209,13 @@ export default function UserDetail() {
               )}
             </ul>
           </div>
-          <div className="h-[280px] overflow-auto table-scroller">
+          <div className="h-[500px] overflow-y-scroll table-scroller">
             {loadingEvents ? (
               <div className="flex items-center justify-center h-full">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2F7EF7]"></div>
               </div>
             ) : events?.length === 0 ? (
-              <p className="text-white pt-4 text-[20px] font-[600]">
+              <p className="text-white text-center pt-4 text-[20px] font-[600]">
                 No events found
               </p>
             ) : (

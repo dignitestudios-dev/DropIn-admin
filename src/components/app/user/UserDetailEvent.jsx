@@ -33,7 +33,7 @@ export default function UserDetailEvent({ event }) {
               {event?.status}
             </div>
           </div>
-          <p className="text-[11px] font-normal mt-2 text-white">
+          <p className="text-[11px] capitalize font-normal mt-2 text-white">
             {event?.type}
           </p>
           <ul className="flex items-center justify-between w-full text-white mt-3  sm:gap-10">

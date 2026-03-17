@@ -67,9 +67,9 @@ export default function EventList({ eventList, pagnition, setPageNo }) {
                   <span className="w-24 opacity-70">Date:</span>
                   <span>{dateFormate(event.date)}</span>
                 </div>
-                <div className="flex items-center text-[12px]">
+                <div className="flex items-center  text-[12px]">
                   <span className="w-24 opacity-70">Type:</span>
-                  <span>{event.type}</span>
+                  <span className="">{event.type}</span>
                 </div>
                 <div className="flex items-center text-[12px]">
                   <span className="w-24 opacity-70">Status:</span>
@@ -120,7 +120,7 @@ export default function EventList({ eventList, pagnition, setPageNo }) {
               </div>
 
               <div className="col-span-1 flex items-center">
-                <span className="text-[12px]">{event.type}</span>
+                <span className="text-[12px] capitalize">{event.type}</span>
               </div>
 
               <div className="col-span-1 flex items-center">

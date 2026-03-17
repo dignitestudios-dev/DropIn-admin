@@ -10,6 +10,8 @@ export default function Pagination({pagnition,setPageNo}) {
     setPageNo(page);
   };
 
+  if (totalPages <= 1) return null;
+
   return (
     <div className="flex items-center">
       <button

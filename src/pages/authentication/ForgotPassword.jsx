@@ -98,6 +98,7 @@ export default function ForgotPassword() {
           </div>
           <button
             type="submit"
+            disabled={loading}
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
             {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Send Otp</span>}

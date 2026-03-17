@@ -89,7 +89,7 @@ export default function InAppChangedPassword() {
                 onClick={() => setIsPasswordVisible((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {isPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                {isPasswordVisible ?  <FaRegEye /> : <FaRegEyeSlash />}
               </button>
             </div>
             <p className="text-[#FFFFFF] text-sm font-normal">
@@ -130,7 +130,7 @@ export default function InAppChangedPassword() {
                 onClick={() => setIsNewPassword((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {IsNewPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                {IsNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
               </button>
             </div>
             {errors.newPassword && touched.newPassword ? (
@@ -168,7 +168,7 @@ export default function InAppChangedPassword() {
                 onClick={() => setIsReEnterPassword((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {!isReEnterPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                {isReEnterPassword ? <FaRegEye /> : <FaRegEyeSlash />}
               </button>
             </div>
             {errors.reEnterPassword && touched.reEnterPassword ? (

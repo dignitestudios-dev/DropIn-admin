@@ -11,9 +11,9 @@ export default function UserList({ userList, pagnition, setPageNo }) {
         {/* Header Row */}
         <div className="hidden md:grid grid-cols-12 gap-4 text-white font-semibold text-[12px] mb-4">
           <div className="col-span-2 py-3 text-left">Name</div>
-          <div className="col-span-2 py-3 text-left">Email</div>
+          <div className="col-span-3 py-3 text-left">Email</div>
           <div className="col-span-2 py-3 text-left">Contact No.</div>
-          <div className="col-span-2 py-3 text-left">User Name</div>
+          {/* <div className="col-span-2 py-3 text-left">User Name</div> */}
           <div className="col-span-2 py-3 text-left">Registration Date</div>
           <div className="col-span-2 py-3 text-left">Action</div>
         </div>
@@ -31,7 +31,7 @@ export default function UserList({ userList, pagnition, setPageNo }) {
                 />
                 <div>
                   <p className="font-medium text-[14px] text-white">
-                    {user.firstName}
+                    {user.firstName} {user.lastName}
                   </p>
                   <p className="text-[12px] text-white/70">@mikesmith</p>
                 </div>
@@ -71,18 +71,18 @@ export default function UserList({ userList, pagnition, setPageNo }) {
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <span className="text-wrap lg:text-nowrap">
-                  {user.firstName}
+                  {user.firstName} {user.lastName}
                 </span>
               </div>
-              <div className="col-span-2 text-left break-words text-wrap">
+              <div className="col-span-3 text-left break-words text-wrap">
                 {user.email || "N/A"}
               </div>
               <div className="col-span-2 text-left break-words">
                 {user.phone || "N/A"}
               </div>
-              <div className="col-span-2 text-left break-words">
+              {/* <div className="col-span-2 text-left break-words">
                 {user.lastName || "N/A"}
-              </div>
+              </div> */}
               <div className="col-span-2 text-left break-words">
                 {" "}
                 {dateFormate(user.createdAt) || "-"}
