@@ -65,6 +65,7 @@ export default function Report() {
         reportList={reportList}
         pagination={pagination}
         setPageNo={setPageNo}
+        refetch={getReportedUsers}
       />
     ),
     // providers: <ReportedProviders reportList={reportList} />,

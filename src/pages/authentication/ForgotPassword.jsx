@@ -10,6 +10,15 @@ import axios from "../../axios";
 import { ErrorToast } from "../../components/global/Toaster";
 import { SuccessToast } from "../../components/global/Toaster";
 export default function ForgotPassword() {
+
+ const capitalizeWords = (text) => {
+  if (!text) return "";
+
+  return text
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
   const navigate = useNavigate("");
   const [loading,setloading]=useState(false)
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
@@ -33,12 +42,12 @@ export default function ForgotPassword() {
           if (response?.status === 200) {
             sessionStorage.setItem("email", values.email);
             navigate("/auth/verifyOtp");
-            SuccessToast(response?.data?.message);
+            SuccessToast(capitalizeWords(response?.data?.message));
           }
           // Navigate to OTP verificatio
         } catch (error) {
           ErrorToast(
-            error.response?.data?.message || "Failed to send reset email"
+            capitalizeWords(error.response?.data?.message) || "Failed To Send Reset Email"
           );
         } finally {
           setloading(false)
@@ -64,7 +73,7 @@ export default function ForgotPassword() {
           </h2>
         </div>
         <p className="font-normal text-[13px] leading-[19px] text-[#FFFFFF] mt-3 text-center">
-          Enter your registered email address to recover your <br /> password.
+          Enter Your Registered Email Address To Recover Your <br /> Password.
         </p>
 
         <form
@@ -101,7 +110,7 @@ export default function ForgotPassword() {
             disabled={loading}
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Send Otp</span>}
+            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Send OTP</span>}
           </button>
         </form>
       </div>

@@ -27,7 +27,7 @@ const UpdatePasswordSuccessfully = () => {
               <h3 className="text-2xl text-white">Password Changed </h3>
             </div>
             <p className="text-center text-wrap text-[#E5DDDD]">
-              Your Password have successfully Changed
+              Your Password Has Been Successfully Changed
             </p>
           </div>
         </div>

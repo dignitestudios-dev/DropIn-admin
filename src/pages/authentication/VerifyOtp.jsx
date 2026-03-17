@@ -21,13 +21,21 @@ export default function VerifyOtp() {
   //   setSeconds(30);
   //   setIsActive(true);
   // };
+  const capitalizeWords = (text) => {
+  if (!text) return "";
+
+  return text
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
   const verifyOtp = async () => {
     if (loading) return;
 
     const otpString = otp.join("");
     if (otpString.length !== 5) {
-      ErrorToast("Please enter a 5-digit OTP");
+      ErrorToast(capitalizeWords("Please enter a 5-digit OTP"));
       return;
     }
 
@@ -41,13 +49,13 @@ export default function VerifyOtp() {
       if (response.data.success) {
         console.log(response?.data.data.token);
         Cookies.set("token", response?.data?.data?.token);
-        SuccessToast("OTP verified successfully");
+        SuccessToast(capitalizeWords("OTP verified successfully"));
         navigate("/auth/changePassword");
       } else {
-        ErrorToast("Invalid OTP. Please try again");
+        ErrorToast(capitalizeWords("Invalid OTP. Please try again"));
       }
     } catch (error) {
-      ErrorToast(error.response?.data?.message || "Failed to verify OTP");
+      ErrorToast(capitalizeWords(error.response?.data?.message || "Failed to verify OTP"));
     } finally {
       setLoading(false);
     }
@@ -98,16 +106,17 @@ export default function VerifyOtp() {
       );
 
       if (response?.status === 200) {
-        SuccessToast(response?.data?.message);
+        SuccessToast(capitalizeWords(response?.data?.message));
         setSeconds(30);
         setIsActive(true);
         setOtp(Array(5).fill(""));
       }
       // Navigate to OTP verificatio
     } catch (error) {
-      ErrorToast(error.response?.data?.message || "Failed to send reset email");
+      ErrorToast(capitalizeWords(error.response?.data?.message || "Failed to send reset email"));
     }
   };
+  
   return (
     <div className="mt-10">
       <img
@@ -126,7 +135,7 @@ export default function VerifyOtp() {
           </h2>
         </div>
         <p className="font-normal text-[13px] leading-[19px] text-[#FFFFFF] mt-3 text-center">
-          Enter the OTP sent to {email} <br />
+          Enter The OTP Sent To {email} <br />
         </p>
 
         <form
@@ -167,7 +176,7 @@ export default function VerifyOtp() {
                 onClick={handleRestart}
                 className="cursor-pointer outline-none text-[13px] border-none text-[#199BD1] font-bold"
               >
-                Resend Otp
+                Resend OTP
               </span>
             )}
           </p>

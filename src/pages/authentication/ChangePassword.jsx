@@ -66,7 +66,7 @@ export default function ChangePassword() {
           </h2>
         </div>
         <p className="font-normal text-[13px] leading-[19px] text-[#FFFFFF] mt-3 text-center">
-          Enter new password to reset.
+          Enter A New Password To Reset.
         </p>
 
         <form
@@ -133,14 +133,14 @@ export default function ChangePassword() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="w-[90%] h-full  bg-transparent rounded-[14px] placeholder:text-[#FFFFFF] outline-none text-white  px-3 text-[16px] font-normal leading-[20.4px]"
-                placeholder="Enter confirm  password here"
+                placeholder="Enter confirm password here"
               />
               <button
                 type="button"
                 onClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
                 className="w-[10%] h-full rounded-r-[8px] bg-transparent text-md text-[#959393] flex items-center justify-center"
               >
-                {isConfirmPasswordVisible ? <FaRegEyeSlash /> : <FaRegEye />}
+                {isConfirmPasswordVisible ? <FaRegEye /> : <FaRegEyeSlash />}
               </button>
             </div>
             {errors.confirmpassword && touched.confirmpassword ? (
