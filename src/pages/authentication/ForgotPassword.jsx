@@ -10,17 +10,20 @@ import axios from "../../axios";
 import { ErrorToast } from "../../components/global/Toaster";
 import { SuccessToast } from "../../components/global/Toaster";
 export default function ForgotPassword() {
+  const capitalizeWords = (text) => {
+    if (!text) return "";
 
- const capitalizeWords = (text) => {
-  if (!text) return "";
+    const message = text
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
 
-  return text
-    .split(" ")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
+      console.log(message)
+      
+    return message;
+  };
   const navigate = useNavigate("");
-  const [loading,setloading]=useState(false)
+  const [loading, setloading] = useState(false);
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: forgotValues,
@@ -29,14 +32,14 @@ export default function ForgotPassword() {
       validateOnBlur: true,
       onSubmit: async (values, action) => {
         try {
-          setloading(true)
+          setloading(true);
           // Send email for password reset
           const response = await axios.post(
             "/auth/send-reset-otp",
-           
+
             {
               email: values.email,
-            }
+            },
           );
           console.log(response, "response");
           if (response?.status === 200) {
@@ -47,10 +50,11 @@ export default function ForgotPassword() {
           // Navigate to OTP verificatio
         } catch (error) {
           ErrorToast(
-            capitalizeWords(error.response?.data?.message) || "Failed To Send Reset Email"
+            capitalizeWords(error.response?.data?.message) ||
+              "Failed To Send Reset Email",
           );
         } finally {
-          setloading(false)
+          setloading(false);
         }
       },
     });
@@ -110,7 +114,11 @@ export default function ForgotPassword() {
             disabled={loading}
             className="w-full h-[49px] rounded-[14px] bg-gradient-to-r from-[#2F7EF7] to-[#1C4A91] text-white flex gap-2 items-center justify-center text-md font-medium"
           >
-            {loading ? <FiLoader size={20} className="animate-spin" /> : <span>Send OTP</span>}
+            {loading ? (
+              <FiLoader size={20} className="animate-spin" />
+            ) : (
+              <span>Send OTP</span>
+            )}
           </button>
         </form>
       </div>
